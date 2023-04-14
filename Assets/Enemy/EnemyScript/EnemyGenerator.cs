@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class EnemyGenerator : MonoBehaviour
 {
+
     public GameObject prehab;
     public Transform player;
-     IEnumerator Start()
-     {
+    public int limit; //敵の最大数管理してます。現在10体
+    int counter = 0;
+
+    IEnumerator Start()
+    {
         while (true)
         {
+            //1秒ごとに1回回ってます。
             yield return new WaitForSeconds(1.0f);
+            if (counter < limit)
+            {
             GameObject enemy = Instantiate(
             //第一引数、参照するもの
             prehab,
@@ -22,7 +29,9 @@ public class EnemyGenerator : MonoBehaviour
                 ),
             Quaternion.identity
             );
-            enemy.GetComponent<EnemyController>().Setplayer(player);
+            enemy.GetComponent<EnemyController>().Setplayer(player);            
+//            counter++
+            }
         }
     }
 
