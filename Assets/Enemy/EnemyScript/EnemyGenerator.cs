@@ -5,12 +5,13 @@ using UnityEngine;
 public class EnemyGenerator : MonoBehaviour
 {
     public GameObject prehab;
+    public Transform player;
      IEnumerator Start()
      {
         while (true)
         {
             yield return new WaitForSeconds(1.0f);
-            Instantiate(
+            GameObject enemy = Instantiate(
             //第一引数、参照するもの
             prehab,
             //第二引数、座標(x,y,z)
@@ -21,6 +22,7 @@ public class EnemyGenerator : MonoBehaviour
                 ),
             Quaternion.identity
             );
+            enemy.GetComponent<EnemyController>().Setplayer(player);
         }
     }
 

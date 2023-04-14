@@ -5,7 +5,13 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    public Transform player;
+    Transform player;
+
+    public void Setplayer(Transform player)
+    {
+        this.player = player;
+    }
+
     //õ“G”ÍˆÍ(’l=ƒ[ƒgƒ‹)
     public float traceDist = 20.0f;//‚Æ‚è‚ ‚¦‚¸20m
     NavMeshAgent nav;
