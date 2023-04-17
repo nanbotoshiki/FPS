@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     Transform player;
+    Animator animator;
 
     public void Setplayer(Transform player)
     {
@@ -13,12 +14,15 @@ public class EnemyController : MonoBehaviour
     }
 
     //索敵範囲(値=メートル)
-    public float traceDist = 20.0f;//とりあえず20m
+    public float traceDist = 20.0f;//とりあえずゾンビのプレイヤーを認識する距離20m
+    public float RunRange = 15.0f;  //ゾンビが走り始める距離
+    public float AttackRange = 1.0f;//殴る用の距離
     NavMeshAgent nav;
 
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         StartCoroutine(CheckDist());
     }
 
@@ -37,10 +41,22 @@ public class EnemyController : MonoBehaviour
                 //プレイヤーの位置を目的値に設定
                 nav.SetDestination(player.position);
                 nav.isStopped = false;
+                if (dist < RunRange)
+                {
+                    animator.SetBool("Discover",true);
+                }
+                else
+                {
+                    animator.SetBool("Discover",false);
+                }
             }
             else
             {
                 nav.isStopped = true;
+            }
+            if (dist < AttackRange)
+            {
+                animator.SetTrigger("Engage");
             }
         }
     }
