@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class EnemyGenerator : MonoBehaviour
 {
+
     public GameObject prehab;
     public Transform player;
-     IEnumerator Start()
-     {
+    public int limit; //“G‚ÌÅ‘å”ŠÇ—‚µ‚Ä‚Ü‚·BŒ»İ10‘Ì
+    int counter = 0;    //ƒ]ƒ“ƒr‚Ì”‚ğŠÇ—‚·‚é—\’è‚Å‚·
+
+    IEnumerator Start()
+    {
         while (true)
         {
+            //1•b‚²‚Æ‚É1‰ñ‰ñ‚Á‚Ä‚Ü‚·B
             yield return new WaitForSeconds(1.0f);
+            if (counter < limit)
+            {
             GameObject enemy = Instantiate(
             //‘æˆêˆø”AQÆ‚·‚é‚à‚Ì
             prehab,
@@ -23,7 +30,8 @@ public class EnemyGenerator : MonoBehaviour
             Quaternion.identity
             );
             enemy.GetComponent<EnemyController>().Setplayer(player);
+                counter++;
+            }
         }
     }
-
 }
