@@ -8,7 +8,7 @@ public class EnemyGenerator : MonoBehaviour
     public GameObject prehab;
     public Transform player;
     public int limit; //“G‚ÌÅ‘å”ŠÇ—‚µ‚Ä‚Ü‚·BŒ»İ10‘Ì
-    int counter = 0;
+    int counter = 0;    //ƒ]ƒ“ƒr‚Ì”‚ğŠÇ—‚·‚é—\’è‚Å‚·
 
     IEnumerator Start()
     {
@@ -29,10 +29,9 @@ public class EnemyGenerator : MonoBehaviour
                 ),
             Quaternion.identity
             );
-            enemy.GetComponent<EnemyController>().Setplayer(player);            
-//            counter++
+            enemy.GetComponent<EnemyController>().Setplayer(player);
+                counter++;
             }
         }
     }
-
 }
