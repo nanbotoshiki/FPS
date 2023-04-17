@@ -51,14 +51,19 @@ public class EnemyController : MonoBehaviour
             animator.SetBool("Engage", false);
         }
     }
-    //倒れる処理//将来的に使うかもしれないもの
-    public void Delite(int health)
+    //倒れる処理//将来的に使うかもしれないもの   
+   /* public void Delite(int hp)
     {
-        
+        if (hp <= 0)
+        {
+            animator.SetTrigger("dead");
+        }    
     }
-    //索敵範囲(値=メートル)
+*/
+
+    //範囲(値=メートル)
     public float traceDist = 20.0f;//とりあえずゾンビのプレイヤーを認識する距離20m
-    public float RunRange = 15.0f;  //ゾンビが走り始める距離
+    public float RunRange = 15.0f;  //ゾンビが走り始める距離15m
     public float AttackRange = 5.0f;//殴る用の距離
 
     NavMeshAgent nav;
