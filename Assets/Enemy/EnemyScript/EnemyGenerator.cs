@@ -12,7 +12,12 @@ public class EnemyGenerator : MonoBehaviour
 
 //ランダム配置でオブジェクトに重ならないように改造中。
 /*
+    base_Eneymy_Position = (10,0);
 
+    Spawn_Position_Rotation = 
+    Quaternion.Eular(0,Random.Range(0,180),0) * base_Enemy_Position;
+
+    enemy_Spawn_Position = player.position + Spawn_Position_Rotation;
     
 
  */
@@ -38,6 +43,7 @@ public class EnemyGenerator : MonoBehaviour
                 //第三引数、向き(デフォルト抜きの場合、Quaternion.identity)
                 Quaternion.LookRotation(player.position)
                 ) ;
+
             enemy.GetComponent<EnemyController>().Setplayer(player);
                 counter++;
             }
