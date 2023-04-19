@@ -43,13 +43,14 @@ public class EnemyController : MonoBehaviour
         if (hp <= 0)
         {
             animator.SetTrigger("dead");
+            
         }    
     }
 */
 
     //範囲(値=メートル)
-    public float traceDist = 20.0f;//とりあえずゾンビのプレイヤーを認識する距離20m
-    public float RunRange = 15.0f;  //ゾンビが走り始める距離15m
+    public float traceDist = 30.0f;//とりあえずゾンビのプレイヤーを認識する距離20m
+    public float RunRange = 10.0f;  //ゾンビが走り始める距離15m
     public float AttackRange = 5.0f;//殴る用の距離
 
     NavMeshAgent nav;

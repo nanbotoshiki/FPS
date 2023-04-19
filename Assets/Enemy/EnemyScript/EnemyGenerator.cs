@@ -16,8 +16,6 @@ public class EnemyGenerator : MonoBehaviour
     {
         while (true)
         {
-            //1秒ごとに1回回ってます。
-            yield return new WaitForSeconds(spownTimer);
             if (counter < limit)
             {
                 float x = Random.Range(-45f, 45f);
@@ -28,6 +26,8 @@ public class EnemyGenerator : MonoBehaviour
                 //置けない場合は、一番近いベイクエリアに代入されるらしい(正直どんなのが裏で動いてるかわからん)
                 if (NavMesh.SamplePosition(spwonPoint, out NavMeshHit navMeshHit, 10.0f, NavMesh.AllAreas))
                 {
+                    //指定した秒数毎にインスタンスされます。
+                    yield return new WaitForSeconds(spownTimer);
                     GameObject enemy =
                     Instantiate(prehab, navMeshHit.position, Quaternion.LookRotation(player.position));
                     enemy.GetComponent<EnemyController>().Setplayer(player);
