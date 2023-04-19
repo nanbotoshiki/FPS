@@ -1,52 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyGenerator : MonoBehaviour
 {
 
     public GameObject prehab;
     public Transform player;
-    public int limit; //“G‚ÌÅ‘å”ŠÇ—‚µ‚Ä‚Ü‚·BŒ»İ10‘Ì
-    int counter = 0;    //ƒ]ƒ“ƒr‚Ì”‚ğŠÇ—‚·‚é—\’è‚Å‚·
-
-//ƒ‰ƒ“ƒ_ƒ€”z’u‚ÅƒIƒuƒWƒFƒNƒg‚Éd‚È‚ç‚È‚¢‚æ‚¤‚É‰ü‘¢’†B
-/*
-    base_Eneymy_Position = (10,0);
-
-    Spawn_Position_Rotation = 
-    Quaternion.Eular(0,Random.Range(0,180),0) * base_Enemy_Position;
-
-    enemy_Spawn_Position = player.position + Spawn_Position_Rotation;
-    
-
- */
+    public float spownTimer;    //æ•µã®å‡ºç¾ã™ã‚‹ã¾ã§ã®æ™‚é–“
+    public int limit;           //æ•µã®æœ€å¤§æ•°ç®¡ç†ã—ã¦ã¾ã™ã€‚ç¾åœ¨10ä½“
+    int counter = 0;            //ã‚¾ãƒ³ãƒ“ã®æ•°ã‚’ç®¡ç†ã™ã‚‹äºˆå®šã§ã™
 
     IEnumerator Start()
     {
         while (true)
         {
-            //1•b‚²‚Æ‚É1‰ñ‰ñ‚Á‚Ä‚Ü‚·B
-            yield return new WaitForSeconds(1.0f);
+            //1ç§’ã”ã¨ã«1å›å›ã£ã¦ã¾ã™ã€‚
+            yield return new WaitForSeconds(spownTimer);
             if (counter < limit)
             {
+                float x = Random.Range(-45f, 45f);
+                float y = Random.Range(1f, 2f);
+                float z = Random.Range(-45f, 45f);
+                Vector3 spwonPoint = new Vector3(x, y, z);
+                //navMesh.Hité–¢æ•°ã¯ãƒ™ã‚¤ã‚¯ã‚¨ãƒªã‚¢ã«ç½®ã‘ã‚‹å ´åˆã¯ãã®ã¾ã¾
+                //ç½®ã‘ãªã„å ´åˆã¯ã€ä¸€ç•ªè¿‘ã„ãƒ™ã‚¤ã‚¯ã‚¨ãƒªã‚¢ã«ä»£å…¥ã•ã‚Œã‚‹ã‚‰ã—ã„(æ­£ç›´ã©ã‚“ãªã®ãŒè£ã§å‹•ã„ã¦ã‚‹ã‹ã‚ã‹ã‚‰ã‚“)
+                if (NavMesh.SamplePosition(spwonPoint, out NavMeshHit navMeshHit, 10.0f, NavMesh.AllAreas))
+                {
+                    GameObject enemy =
+                    Instantiate(prehab, navMeshHit.position, Quaternion.LookRotation(player.position));
+                    enemy.GetComponent<EnemyController>().Setplayer(player);
+                    counter++;
+                }
+            }
+        }
+    }
+}
 
-                GameObject enemy = Instantiate(
-                //‘æˆêˆø”AQÆ‚·‚é‚à‚Ì
+//ä»¥å‰ã®ç”Ÿæˆã‚³ãƒ¼ãƒ‰
+/*              GameObject enemy = Instantiate(
+                //ç¬¬ä¸€å¼•æ•°ã€å‚ç…§ã™ã‚‹ã‚‚ã®
                 prehab,
-                //‘æ“ñˆø”AÀ•W(x,y,z)
+                //ç¬¬äºŒå¼•æ•°ã€åº§æ¨™(x,y,z)
                 new Vector3(
                     Random.Range(-45f, 45f),
                     Random.Range(1f, 2f),
                     Random.Range(-45f, 45f)
                 ),
-                //‘æOˆø”AŒü‚«(ƒfƒtƒHƒ‹ƒg”²‚«‚Ìê‡AQuaternion.identity)
+                //ç¬¬ä¸‰å¼•æ•°ã€å‘ã(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆæŠœãã®å ´åˆã€Quaternion.identity)
                 Quaternion.LookRotation(player.position)
                 ) ;
 
             enemy.GetComponent<EnemyController>().Setplayer(player);
                 counter++;
-            }
-        }
-    }
-}
+*/
