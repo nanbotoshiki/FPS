@@ -12,27 +12,13 @@ public class EnemyController : MonoBehaviour
     {
         this.player = player;
     }
-    //索敵用関数
-    public void Seach(float dist)
-    {
-        //索敵範囲に入りましたか?
-        if (dist < traceDist)
-        {
-            //プレイヤーの位置を目的値に設定
-            nav.SetDestination(player.position);
-            nav.isStopped = false;
-        }
-        else
-        {
-            nav.isStopped = true;
-        }
-    }
     //走る用関数
     public void Run(float dist)
     {
         if (dist < RunRange)
         {
             animator.SetBool("Discover", true);
+            Attack(dist);
         }
         else
         {
@@ -83,10 +69,19 @@ public class EnemyController : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             float dist =
                 Vector3.Distance
-                (player.position, transform.position);
-            Attack(dist);
-            Run(dist);
-            Seach(dist);
+                (player.position, transform.position);           
+            //索敵範囲に入りましたか?
+            if (dist < traceDist)
+            {
+                //プレイヤーの位置を目的値に設定
+                nav.SetDestination(player.position);
+                nav.isStopped = false;
+                Run(dist);
+            }
+            else
+            {
+                nav.isStopped = true;
+            }
         }
     }
 }
