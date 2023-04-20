@@ -2,12 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+/*
+SE関連をひとまずコメントアウト 
+単体の音声のみ適応中
+ */
+
 
 public class EnemyController : MonoBehaviour
 {
+
+
+    NavMeshAgent nav;
     Transform player;
     Animator animator;
-    //プレイヤー認識用
+    AudioSource source;
+
+    //範囲(値=メートル)
+    public float traceDist = 30.0f;//とりあえずゾンビのプレイヤーを認識する距離20m
+    public float RunRange = 10.0f;  //ゾンビが走り始める距離15m
+    public float AttackRange = 5.0f;//殴る用の距離
+    public AudioClip SE1;
+    //SE
+    /*
+    public void SE()
+    {
+        EnemySoundEffect.instance.PlaySE();
+    }
+    */
+    public void SE()
+    {
+        source.PlayOneShot(SE1);
+    }
+
+//プレイヤー認識用
     public void Setplayer(Transform player)
     {
         this.player = player;
@@ -43,22 +70,18 @@ public class EnemyController : MonoBehaviour
         if (hp <= 0)
         {
             animator.SetTrigger("dead");
+            
         }    
     }
 */
 
-    //範囲(値=メートル)
-    public float traceDist = 20.0f;//とりあえずゾンビのプレイヤーを認識する距離20m
-    public float RunRange = 15.0f;  //ゾンビが走り始める距離15m
-    public float AttackRange = 5.0f;//殴る用の距離
-
-    NavMeshAgent nav;
-
     void Start()
     {
-        nav = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-        StartCoroutine(CheckDist());
+    nav = GetComponent<NavMeshAgent>();
+    animator = GetComponent<Animator>();
+    source = GetComponent<AudioSource>();
+    StartCoroutine(CheckDist());
+
     }
 
     IEnumerator CheckDist()
@@ -76,12 +99,14 @@ public class EnemyController : MonoBehaviour
                 //プレイヤーの位置を目的値に設定
                 nav.SetDestination(player.position);
                 nav.isStopped = false;
+                SE();
                 Run(dist);
             }
             else
             {
                 nav.isStopped = true;
             }
+//           SE();
         }
     }
 }

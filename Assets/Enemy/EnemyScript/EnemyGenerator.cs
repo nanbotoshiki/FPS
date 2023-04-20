@@ -16,7 +16,7 @@ public class EnemyGenerator : MonoBehaviour
     {
         while (true)
         {
-            //1秒ごとに1回回ってます。
+            //指定した秒数毎にインスタンスされます。
             yield return new WaitForSeconds(spownTimer);
             if (counter < limit)
             {
