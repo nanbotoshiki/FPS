@@ -20,36 +20,44 @@ public class AppearItems : MonoBehaviour
     }
     IEnumerator AppearItem()
     {
-       
-        while (bulletArray.Length < itemLimit)
+        while (true)
         {
-
             bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
-            NavMeshHit navMeshHit;
-            while (true)
-            {
-                float x = Random.Range(-50.0f, 50.0f);
-                float z = Random.Range(-47.0f, 45.0f);
-                Vector3 randomPoint = new Vector3(x, 3.0f, z);
-                if (NavMesh.SamplePosition(randomPoint, out navMeshHit, 2.0f, NavMesh.AllAreas))
-                {
-                    break;
-                }
-            }
-           
-            yield return new WaitForSeconds(span);
-            Instantiate(bulletPrefab, navMeshHit.position, Quaternion.identity);
-
-            /*bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
-            while (bulletArray.Length == itemLimit)
-            {
-                bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
-                if(bulletArray.Length < itemLimit)
-                {
-                    break;
-                }
-            }*/
             Debug.Log(bulletArray.Length);
+            if (bulletArray.Length < itemLimit)
+            {
+                
+                NavMeshHit navMeshHit;
+                while (true)
+                {
+                    float x = Random.Range(-50.0f, 50.0f);
+                    float z = Random.Range(-47.0f, 45.0f);
+                    Vector3 randomPoint = new Vector3(x, 3.0f, z);
+                    if (NavMesh.SamplePosition(randomPoint, out navMeshHit, 2.0f, NavMesh.AllAreas))
+                    {
+                        break;
+                    }
+                }
+
+                yield return new WaitForSeconds(span);
+                Instantiate(bulletPrefab, navMeshHit.position, Quaternion.identity);
+
+
+                /*bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
+                Debug.Log(bulletArray.Length);
+
+                while (bulletArray.Length >= itemLimit)
+                {
+                    yield return new WaitForSeconds(1.0f);
+                    bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
+                    if (bulletArray.Length < itemLimit)
+                    {
+                        Debug.Log(bulletArray.Length);
+                        break;
+                    }
+                }*/
+            }
+            yield return null;
         }
 
     }
