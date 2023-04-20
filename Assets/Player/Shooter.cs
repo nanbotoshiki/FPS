@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     public int shotCount = 50;
-    public int MaxShotCount = 100;
+    const int MaxShotCount = 100;
     public GameObject bulletPrefab;
     public float shotSpeed;
     private float shotInterval;
@@ -69,6 +69,12 @@ public class Shooter : MonoBehaviour
             }
 
         }
+
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            shotInterval = 2.0f;
+        }
+
         /* リロードは4.19に削除（残玉はアイテム取得で回復
         else if (Input.GetKeyDown(KeyCode.R))
         {
@@ -77,12 +83,17 @@ public class Shooter : MonoBehaviour
         */
        
     }
-    public void AddShell(int amount)
+
+
+    public int ShotCount
     {
-        shotCount += amount;
-        if (shotCount > MaxShotCount)
+        get
         {
-            shotCount = MaxShotCount;
+            return shotCount;
+        }
+        set
+        {
+            shotCount = value;
         }
     }
 
