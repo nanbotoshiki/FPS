@@ -20,10 +20,10 @@ public class AppearItems : MonoBehaviour
     }
     IEnumerator AppearItem()
     {
-        
+       
         while (bulletArray.Length < itemLimit)
         {
-            
+
             bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
             NavMeshHit navMeshHit;
             while (true)
@@ -37,17 +37,21 @@ public class AppearItems : MonoBehaviour
                 }
             }
            
-                /*while (!true)
-                {
-                    NavMesh.SamplePosition(randomPoint, out NavMeshHit navMeshHit, 2.0f, NavMesh.AllAreas);
-                }*/
+            yield return new WaitForSeconds(span);
+            Instantiate(bulletPrefab, navMeshHit.position, Quaternion.identity);
 
-                yield return new WaitForSeconds(span);
-                Instantiate(bulletPrefab, navMeshHit.position, Quaternion.identity);
-            
-            
+            /*bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
+            while (bulletArray.Length == itemLimit)
+            {
+                bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
+                if(bulletArray.Length < itemLimit)
+                {
+                    break;
+                }
+            }*/
             Debug.Log(bulletArray.Length);
         }
+
     }
 
     // Update is called once per frame
