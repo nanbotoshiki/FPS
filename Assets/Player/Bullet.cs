@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-
+    GameManager gameManager;
     // 弾のエフェクト
     //public GameObject effect;
+    GameManager GameManager
+    {
+        get
+        {
+            if (gameManager == null)
+            {
+                gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+            }
+            return gameManager;
+        }
+    }
 
     // 弾の当たり判定処理
     void OnCollisionEnter(Collision collision)
@@ -16,6 +27,7 @@ public class Bullet : MonoBehaviour
         {
             // 敵を破壊する
             Destroy(collision.gameObject);
+            GameManager.Count++;
 
             // エフェクトを出す
             //Instantiate(effect, transform.position, Quaternion.identity);
