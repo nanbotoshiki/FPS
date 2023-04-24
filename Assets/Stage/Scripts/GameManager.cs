@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    bool freezeUpdate = false;
     float countup = 0.0f;
     public Text timeText;
 
@@ -59,15 +60,23 @@ public class GameManager : MonoBehaviour
     {
         count = 0;
         UpdateCountText();
+        //StartCoroutine("CountScore");
     }
 
+    /*IEnumerator CountScore()
+    {
+        countup += Time.deltaTime;
+        timeText.text = "Score" + " " + countup.ToString("f0");
+
+        if()
+    }*/
     // Update is called once per frame
     void Update()
     {
         //カウントアップの処理
         countup += Time.deltaTime;
-        timeText.text = countup.ToString("f0") + "秒";
-        Debug.Log(isGameClear);
+        timeText.text = "Score" + " " + countup.ToString("f0");
+        if (freezeUpdate) return;
       
     }
 
@@ -80,11 +89,14 @@ public class GameManager : MonoBehaviour
 
 
         //クリア後の処理
+        freezeUpdate = true;
+        //ゲームクリアUIの表示
         gameClearCanvas.enabled = true;
+        //カーソル表示させる
+        Cursor.lockState = CursorLockMode.None;
         //弾薬の湧き止める
         //プレイヤー止める
-        //moveBehaviour.enabled = false;
-       // Cursor.lockState = CursorLockMode.None;
+
 
         isGameClear = true;
     }
@@ -95,18 +107,20 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        
-         // ゲームオーバー後の処理
-         //playerController.enabled = false;
-         gameOverCanvas.enabled = true;
-         //Cursor.lockState = CursorLockMode.None;
+
+        // ゲームオーバー後の処理
+        freezeUpdate = true;
+        //ゲームオーバーUIの表示
+        gameOverCanvas.enabled = true;
+        //カーソル表示させる
+        Cursor.lockState = CursorLockMode.None;
          
         isGameOver = true;
     }
 
     public void Retry()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Stage1");
     }
     public void UpdateCountText()
     {
