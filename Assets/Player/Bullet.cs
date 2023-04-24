@@ -6,6 +6,19 @@ public class Bullet : MonoBehaviour
 {
     public GameObject bloodEffect;
     public GameObject decalHitWall;
+
+    GameManager gameManager;
+    GameManager GameManager
+    {
+        get
+        {
+            if (gameManager == null)
+            {
+                gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+            }
+            return gameManager;
+        }
+    }
     // 弾のエフェクト
     //public GameObject effect;
 
@@ -18,6 +31,7 @@ public class Bullet : MonoBehaviour
             // 敵を破壊する
             Destroy(collision.gameObject);
             Destroy(gameObject);
+            GameManager.Count++;
             // エフェクトを出す
             Instantiate(bloodEffect, transform.position, Quaternion.identity);
         }
