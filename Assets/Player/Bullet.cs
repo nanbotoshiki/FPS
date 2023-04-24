@@ -4,20 +4,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    GameManager gameManager;
+    public GameObject bloodEffect;
+    public GameObject decalHitWall;
     // 弾のエフェクト
     //public GameObject effect;
-    GameManager GameManager
-    {
-        get
-        {
-            if (gameManager == null)
-            {
-                gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-            }
-            return gameManager;
-        }
-    }
 
     // 弾の当たり判定処理
     void OnCollisionEnter(Collision collision)
@@ -27,16 +17,18 @@ public class Bullet : MonoBehaviour
         {
             // 敵を破壊する
             Destroy(collision.gameObject);
-            GameManager.Count++;
-
+            Destroy(gameObject);
             // エフェクトを出す
-            //Instantiate(effect, transform.position, Quaternion.identity);
+            Instantiate(bloodEffect, transform.position, Quaternion.identity);
         }
-
-        // 弾を消す
-        Destroy(gameObject);
-        // 敵以外でも消えるエフェクトを出す　
-        //Instantiate(effect, transform.position, Quaternion.identity);
+        else
+        {
+            // 弾を消す
+            Destroy(gameObject);
+            // 敵以外でも消えるエフェクトを出す　
+            Instantiate(decalHitWall, transform.position, Quaternion.LookRotation(collision.contacts[0].normal));
+        }
+        
     }
 
     // 弾の移動処理

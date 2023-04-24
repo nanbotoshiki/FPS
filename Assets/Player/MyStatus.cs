@@ -10,6 +10,7 @@ public class MyStatus : MonoBehaviour
     const int Defaulthp = 100;
     int hp = Defaulthp;
     Shooter ss;
+    Animator animator;
 
     public Text bulletText;
     public Text hpText;
@@ -34,12 +35,18 @@ public class MyStatus : MonoBehaviour
     private void Start()
     {
         ss = GameObject.Find("Shooter").GetComponent<Shooter>();
+        animator = GetComponent<Animator>();
     }
 
     public void Update()
     {
         hpText.text = Hp.ToString();
         bulletText.text = ss.ShotCount.ToString();
+
+        if (Hp <= 0)
+        {
+            animator.SetTrigger("death");
+        }
 
     }
 

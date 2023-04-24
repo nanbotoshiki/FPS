@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class Shooter : MonoBehaviour
 {
+
     public int shotCount = 50;
     const int MaxShotCount = 100;
     public GameObject bulletPrefab;
     public float shotSpeed;
     private float shotInterval;
+    public GameObject muzzelSpawn;
+    private GameObject holdFlash;
 
+
+    void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
 
     void Update()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         Animator animator = GetComponentInParent<Animator>();
 
         if (Input.GetKey(KeyCode.Mouse0))
@@ -27,8 +36,9 @@ public class Shooter : MonoBehaviour
 
                 if (animator.GetBool("Aim") == false)
                 {
-
-
+                    //射撃エフェクト
+                    holdFlash = Instantiate(muzzelSpawn, transform.position, muzzelSpawn.transform.rotation * Quaternion.Euler(0, 0, 90)) as GameObject;
+                    //弾を生成
                     GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.parent.eulerAngles.x, transform.parent.eulerAngles.y, 0));
                     Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
                     bulletRb.velocity = transform.forward * shotSpeed;
@@ -54,10 +64,14 @@ public class Shooter : MonoBehaviour
                     shotInterval = 0;
                     Destroy(bullet, 3.0f);
                     */
-                    
+                    //射撃エフェクト
+                    holdFlash = Instantiate(muzzelSpawn, transform.position, muzzelSpawn.transform.rotation * Quaternion.Euler(0, 0, 90)) as GameObject;
+
+                    //発射位置とカメラ方向
                     Vector3 startPos = transform.position;
                     Vector3 cameraPosition = Camera.main.transform.forward;
                     //Vector3 shootDirection = (cameraPosition - startPos).normalized;
+                    //弾を生成
                     GameObject bullet = Instantiate(bulletPrefab, startPos, Quaternion.identity);
                     Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
                     bulletRb.velocity = cameraPosition * shotSpeed;
