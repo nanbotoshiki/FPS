@@ -6,12 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    bool freezeUpdate = false;
+    
     float countup = 0.0f;
     public Text timeText;
-
-    //[SerializeField]
-    //MoveBehaviour moveBehaviour = null;
+    public Text scoreText;
     
     //ゲームクリア時に表示されるキャンバス（常にCanvasを非表示にしておく）
     [SerializeField]
@@ -21,11 +19,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Canvas gameOverCanvas = null;
 
-    //ゲームスコアのUI（秒数）
+    [SerializeField]
+    Canvas Canvas_playerst;
+
+    //敵の撃破数
     [SerializeField]
     Text countText = null;
 
-    //ゲームのクリア条件
+    //敵の撃破目標
     [SerializeField, Min(1)]
     int maxCount = 5;
 
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
     //EnemyGenerator script;
     //int maxCount = script.limit;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         count = 0;
@@ -70,14 +71,19 @@ public class GameManager : MonoBehaviour
 
         if()
     }*/
-    // Update is called once per frame
+
     void Update()
     {
         //カウントアップの処理
         countup += Time.deltaTime;
         timeText.text = "Score" + " " + countup.ToString("f0");
-        if (freezeUpdate) return;
-      
+        //クリアorゲームオーバー時に時間を止める
+        if (isGameClear || isGameOver)
+        {
+            Time.timeScale = 0;
+            scoreText.text = "Score" + " " + countup.ToString("f0");
+            return;
+        }
     }
 
     public void GameClear()
@@ -89,13 +95,15 @@ public class GameManager : MonoBehaviour
 
 
         //クリア後の処理
-        freezeUpdate = true;
+        //freezeUpdate = true;
         //ゲームクリアUIの表示
         gameClearCanvas.enabled = true;
+        //クリア後にプレイヤーUIを非表示
+        Canvas_playerst.enabled = false;
         //カーソル表示させる
         Cursor.lockState = CursorLockMode.None;
         //弾薬の湧き止める
-        //プレイヤー止める
+        
 
 
         isGameClear = true;
@@ -109,9 +117,11 @@ public class GameManager : MonoBehaviour
         }
 
         // ゲームオーバー後の処理
-        freezeUpdate = true;
+        //freezeUpdate = true;
         //ゲームオーバーUIの表示
         gameOverCanvas.enabled = true;
+        //ゲームオーバー後にプレイヤーUIを非表示
+        Canvas_playerst.enabled = false;
         //カーソル表示させる
         Cursor.lockState = CursorLockMode.None;
          
