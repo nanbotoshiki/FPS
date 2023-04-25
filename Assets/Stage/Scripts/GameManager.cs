@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
     {
         //カウントアップの処理
         countup += Time.deltaTime;
-        timeText.text = "Score" + " " + countup.ToString("f0");
+        timeText.text = "SCORE" + " " + countup.ToString("f0");
         //クリアorゲームオーバー時に時間を止める
         //if (isGameClear || isGameOver)
         //{
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 
 
         Time.timeScale = 0.0f;
-        scoreText.text = "Score" + " " + countup.ToString("f0");
+        scoreText.text = "SCORE" + " " + countup.ToString("f0");
 
         isGameClear = true;
     }
@@ -130,6 +130,12 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("Stage1");
         
+    }
+
+    public void Quit()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("Title");
     }
     public void UpdateCountText()
     {
