@@ -24,6 +24,9 @@ public class EnemyController : MonoBehaviour
     public AudioClip SE1;
 
     public int hp;
+
+    private Collider leftHandCollider;
+    private Collider rightHandCollider;
     //SE
     /*
     public void SE()
@@ -45,7 +48,7 @@ public class EnemyController : MonoBehaviour
     public void Run(float dist)
     {
         if (dist < RunRange)
-        {
+        { 
             animator.SetBool("Discover", true);
             Attack(dist);
         }
@@ -84,7 +87,13 @@ public class EnemyController : MonoBehaviour
     nav = GetComponent<NavMeshAgent>();
     animator = GetComponent<Animator>();
     source = GetComponent<AudioSource>();
-    StartCoroutine(CheckDist());
+
+    //敵の攻撃の当たり判定を取得
+    leftHandCollider = GameObject.Find("Base HumanLArmPalm").GetComponent<CapsuleCollider>();
+    rightHandCollider = GameObject.Find("Base HumanRArmPalm").GetComponent<CapsuleCollider>();
+        //Setplayer(player);
+
+        StartCoroutine(CheckDist());
 
     }
 
@@ -94,14 +103,20 @@ public class EnemyController : MonoBehaviour
         {
             //1秒間に10回発見判定
             yield return new WaitForSeconds(0.1f);
+
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
+            if (p != null)
+            {
+                transform.LookAt(p.transform);
+            }
             float dist =
                 Vector3.Distance
-                (player.position, transform.position);           
+                (p.transform.position, transform.position);           
             //索敵範囲に入りましたか?
             if (dist < traceDist)
             {
                 //プレイヤーの位置を目的値に設定
-                nav.SetDestination(player.position);
+                nav.SetDestination(p.transform.position);
                 nav.isStopped = false;
                 SE();
                 Run(dist);
@@ -126,22 +141,7 @@ public class EnemyController : MonoBehaviour
             hp = value;
         }
     }
-    /*
-    IEnumerator CheckDeath()
-    {
-        while (true)
-        {
-            //1秒間に10回発見判定
-            yield return new WaitForSeconds(0.1f);
-            if (Hp <= 0)
-            {
-                animator.SetTrigger("dead");
-                Destroy(transform, 3.0f);
-            }
-           
-        }
-    }
-    */
+   
 
     //ダメージ処理、0になったら死亡アニメで3秒で消える
     public void TakeDamage(int damage)
