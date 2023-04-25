@@ -22,7 +22,7 @@ public class Shooter : MonoBehaviour
 
     void Update()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         Animator animator = GetComponentInParent<Animator>();
 
         if (Input.GetKey(KeyCode.Mouse0))
