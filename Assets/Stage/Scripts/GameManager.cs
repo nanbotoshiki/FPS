@@ -61,16 +61,9 @@ public class GameManager : MonoBehaviour
     {
         count = 0;
         UpdateCountText();
-        //StartCoroutine("CountScore");
     }
 
-    /*IEnumerator CountScore()
-    {
-        countup += Time.deltaTime;
-        timeText.text = "Score" + " " + countup.ToString("f0");
 
-        if()
-    }*/
 
     void Update()
     {
@@ -78,18 +71,20 @@ public class GameManager : MonoBehaviour
         countup += Time.deltaTime;
         timeText.text = "Score" + " " + countup.ToString("f0");
         //クリアorゲームオーバー時に時間を止める
-        if (isGameClear || isGameOver)
-        {
-            Time.timeScale = 0;
-            scoreText.text = "Score" + " " + countup.ToString("f0");
-            return;
-        }
+        //if (isGameClear || isGameOver)
+        //{
+        //  //Debug.Break();
+        //    Time.timeScale = 0.0f;
+        //    scoreText.text = "Score" + " " + countup.ToString("f0");
+            
+        //}
     }
 
     public void GameClear()
     {
         if(isGameClear || isGameOver)
         {
+
             return;
         }
 
@@ -103,8 +98,10 @@ public class GameManager : MonoBehaviour
         //カーソル表示させる
         Cursor.lockState = CursorLockMode.None;
         //弾薬の湧き止める
-        
 
+
+        Time.timeScale = 0.0f;
+        scoreText.text = "Score" + " " + countup.ToString("f0");
 
         isGameClear = true;
     }
@@ -124,13 +121,15 @@ public class GameManager : MonoBehaviour
         Canvas_playerst.enabled = false;
         //カーソル表示させる
         Cursor.lockState = CursorLockMode.None;
-         
+        Time.timeScale = 0.0f;
         isGameOver = true;
     }
 
     public void Retry()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene("Stage1");
+        
     }
     public void UpdateCountText()
     {
