@@ -8,13 +8,15 @@ using UnityEngine.UI;
 public class MyStatus : MonoBehaviour
 {
     const int Defaulthp = 100;
-    int hp = Defaulthp;
+    public int hp = Defaulthp;
     Shooter ss;
     Animator animator;
 
     public Text bulletText;
     public Text hpText;
-   
+    GameManager gm;
+
+
     public int Hp
     {
         get
@@ -45,7 +47,11 @@ public class MyStatus : MonoBehaviour
 
         if (Hp <= 0)
         {
+            enabled = false;
             animator.SetTrigger("death");
+            GetComponent<Shooter>().enabled = false;
+
+            gm.GameOver();
         }
 
     }

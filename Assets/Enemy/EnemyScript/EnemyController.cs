@@ -22,6 +22,8 @@ public class EnemyController : MonoBehaviour
     public float RunRange = 10.0f;  //ゾンビが走り始める距離15m
     public float AttackRange = 5.0f;//殴る用の距離
     public AudioClip SE1;
+
+    public int hp;
     //SE
     /*
     public void SE()
@@ -75,6 +77,8 @@ public class EnemyController : MonoBehaviour
     }
 */
 
+    
+
     void Start()
     {
     nav = GetComponent<NavMeshAgent>();
@@ -109,4 +113,45 @@ public class EnemyController : MonoBehaviour
 //           SE();
         }
     }
+
+    //南保追記 hpプロパティ
+    public int Hp
+    {
+        get
+        {
+            return hp;
+        }
+        set
+        {
+            hp = value;
+        }
+    }
+    /*
+    IEnumerator CheckDeath()
+    {
+        while (true)
+        {
+            //1秒間に10回発見判定
+            yield return new WaitForSeconds(0.1f);
+            if (Hp <= 0)
+            {
+                animator.SetTrigger("dead");
+                Destroy(transform, 3.0f);
+            }
+           
+        }
+    }
+    */
+
+    //ダメージ処理、0になったら死亡アニメで3秒で消える
+    public void TakeDamage(int damage)
+    {
+        Hp -= damage;
+        if (Hp <= 0)
+        {
+            animator.SetTrigger("dead");
+            Destroy(gameObject, 3.0f);
+        }
+    }
+
 }
