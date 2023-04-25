@@ -8,18 +8,7 @@ public class Bullet : MonoBehaviour
     public GameObject decalHitWall;
     Shooter ss;
 
-    GameManager gameManager;
-    GameManager GameManager
-    {
-        get
-        {
-            if (gameManager == null)
-            {
-                gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-            }
-            return gameManager;
-        }
-    }
+   
     // 弾のエフェクト
     //public GameObject effect;
 
@@ -40,7 +29,7 @@ public class Bullet : MonoBehaviour
                 ec.TakeDamage(10);
             }
             Destroy(gameObject);
-            GameManager.Count++;
+            
             // エフェクトを出す
             Instantiate(bloodEffect, transform.position, Quaternion.identity);
         }

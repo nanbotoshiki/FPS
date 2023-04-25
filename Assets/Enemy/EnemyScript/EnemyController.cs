@@ -27,6 +27,20 @@ public class EnemyController : MonoBehaviour
 
     private Collider leftHandCollider;
     private Collider rightHandCollider;
+
+    //ƒ]ƒ“ƒr‚ð“|‚µ‚½Žž‚ÉƒJƒEƒ“ƒg‚·‚é‚½‚ß‚ÉgameManager‚ð’Ç‰Á
+    GameManager gameManager;
+    GameManager GameManager
+    {
+        get
+        {
+            if (gameManager == null)
+            {
+                gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+            }
+            return gameManager;
+        }
+    }
     //SE
     /*
     public void SE()
@@ -62,6 +76,10 @@ public class EnemyController : MonoBehaviour
     {
         if (dist < AttackRange)
         {
+            leftHandCollider.enabled = true;
+            rightHandCollider.enabled = true;
+            Invoke("ColliderReset", 1.5f);
+
             animator.SetBool("Engage", true);
         }
         else
@@ -151,6 +169,7 @@ public class EnemyController : MonoBehaviour
         {
             animator.SetTrigger("dead");
             Destroy(gameObject, 3.0f);
+            GameManager.Count++;
         }
     }
 
