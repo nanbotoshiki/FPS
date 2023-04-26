@@ -80,6 +80,14 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 		Vector3 noCollisionOffset = targetCamOffset;
 		while (noCollisionOffset.magnitude >= 0.2f)
 		{
+			if (noCollisionOffset.magnitude > 0)
+			{
+				noCollisionOffset -= noCollisionOffset.normalized * 0.2f;
+			}
+			else
+			{
+				break;
+			}
 			if (DoubleViewingPosCheck(baseTempPosition + aimRotation * noCollisionOffset))
 				break;
 			noCollisionOffset -= noCollisionOffset.normalized * 0.2f;
