@@ -28,6 +28,8 @@ public class EnemyController : MonoBehaviour
     private Collider leftHandCollider;
     private Collider rightHandCollider;
 
+    private bool isInvincible = false;
+
     //ゾンビを倒した時にカウントするためにgameManagerを追加
     GameManager gameManager;
     GameManager GameManager
@@ -164,10 +166,15 @@ public class EnemyController : MonoBehaviour
     //ダメージ処理、0になったら死亡アニメで3秒で消える
     public void TakeDamage(int damage)
     {
+        if (isInvincible)
+        {
+            return; // 無敵状態ならダメージを受けない、死んだら無敵にする
+        }
         Hp -= damage;
         if (Hp <= 0)
         {
             animator.SetTrigger("dead");
+            isInvincible = true;
             Destroy(gameObject, 3.0f);
             GameManager.Count++;
         }
