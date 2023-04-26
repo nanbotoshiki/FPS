@@ -13,6 +13,8 @@ public class Shooter : MonoBehaviour
     public GameObject muzzelSpawn;
     private GameObject holdFlash;
 
+    [SerializeField]
+    private SoundManager soundManager; //サウンドマネージャー
 
     void Awake()
     {
@@ -79,9 +81,12 @@ public class Shooter : MonoBehaviour
                     Destroy(bullet, 3.0f);
                     
                 }
-
+                soundManager.Play("player攻撃");
             }
-
+            else
+            {
+                soundManager.Play("player球切れ");
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))

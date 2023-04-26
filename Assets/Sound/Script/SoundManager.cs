@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sound_Manager : MonoBehaviour
+public class SoundManager : MonoBehaviour
 {
     //System.で宣言する事で、インスペクターから値をセットできる。
     [System.Serializable]
@@ -40,6 +40,7 @@ public class Sound_Manager : MonoBehaviour
         {
             soundDictionary.Add(soundData.name, soundData);
         }
+        DontDestroyOnLoad(gameObject);
     }
 
     //未使用のAudioSourceの取得 全て使用中の場合はnullを返す
@@ -49,7 +50,7 @@ public class Sound_Manager : MonoBehaviour
         {
             if (audioSourceList[i].isPlaying == false) return audioSourceList[i];
         }
-
+        Debug.Log("未使用のAudioSourceは見つかりませんでした");
         return null; //未使用のAudioSourceは見つかりませんでした
     }
 
