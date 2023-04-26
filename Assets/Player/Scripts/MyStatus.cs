@@ -11,10 +11,11 @@ public class MyStatus : MonoBehaviour
     public int hp = Defaulthp;
     Shooter ss;
     Animator animator;
+    GameManager gameManager;
 
     public Text bulletText;
     public Text hpText;
-    GameManager gm;
+
 
 
     public int Hp
@@ -38,6 +39,7 @@ public class MyStatus : MonoBehaviour
     {
         ss = GameObject.Find("Shooter").GetComponent<Shooter>();
         animator = GetComponent<Animator>();
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
     public void Update()
@@ -49,11 +51,32 @@ public class MyStatus : MonoBehaviour
         {
             enabled = false;
             animator.SetTrigger("death");
-            GetComponent<Shooter>().enabled = false;
+            AimBehaviourBasic aimBehaviour = GetComponent<AimBehaviourBasic>();
+            if (aimBehaviour != null)
+            {
+                aimBehaviour.enabled = false;
+            }
+            
+            Shooter shooter = transform.Find("Shooter").GetComponent<Shooter>();
+            if (shooter != null)
+            {
+                shooter.enabled = false;
+            }
 
-            gm.GameOver();
+            ThirdPersonOrbitCamBasic tps = transform.Find("Main Camera").GetComponent<ThirdPersonOrbitCamBasic>();
+            if (tps != null)
+            {
+                tps.enabled = false;
+            }
+
+            Invoke("GameOverDelayed", 2f);
         }
 
+    }
+
+    void GameOverDelayed()
+    {
+        gameManager.GameOver();
     }
 
 }
