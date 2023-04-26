@@ -11,6 +11,7 @@ public class Sound_Manager : MonoBehaviour
         public string name;         //インスペクターで名前をつけてね
         public AudioClip audioClip; //受け取る音
         public float playedTime;    //前回再生した時間
+        public float Volume = 0.1f;   //ボリューム管理※予定
     }
 
     [SerializeField]
@@ -75,4 +76,6 @@ public class Sound_Manager : MonoBehaviour
             Debug.LogWarning($"その別名は登録されていません:{name}");
         }
     }
+
+
 }
