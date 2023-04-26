@@ -6,14 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class Title : MonoBehaviour
 {
-    public Text easyText;
-    public Text normalText;
-    public Text hardText;
+    public GameObject easyButton;
+    public GameObject normalButton;
+    public GameObject hardButton;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        normalButton.gameObject.SetActive(true);
+        easyButton.gameObject.SetActive(false);
+        hardButton.gameObject.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -29,13 +32,14 @@ public class Title : MonoBehaviour
 
     public void Right()
     {
-        normalText.enabled = false;
-        hardText.enabled = true;
+        easyButton.gameObject.SetActive(false);
+        normalButton.gameObject.SetActive(false);
+        hardButton.gameObject.SetActive(true);
     }
 
     public void Left()
     {
-        normalText.enabled = false;
-        easyText.enabled = true;
+        //normalText.enabled = false;
+        //easyText.enabled = true;
     }
 }
