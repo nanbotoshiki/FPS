@@ -23,7 +23,7 @@ public class AppearItems : MonoBehaviour
         while (true)
         {
             bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
-            Debug.Log(bulletArray.Length);
+            //Debug.Log(bulletArray.Length);
             if (bulletArray.Length < itemLimit)
             {
                 

@@ -13,10 +13,10 @@ public class Title : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        normalButton.gameObject.SetActive(true);
+        /*normalButton.gameObject.SetActive(true);
         easyButton.gameObject.SetActive(false);
         hardButton.gameObject.SetActive(false);
-
+        */
     }
 
     // Update is called once per frame

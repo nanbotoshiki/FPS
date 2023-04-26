@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     float countup = 0.0f;
     public Text timeText;
     public Text scoreText;
+    public GameObject difficultyButton;
     
     //ゲームクリア時に表示されるキャンバス（常にCanvasを非表示にしておく）
     [SerializeField]
@@ -61,8 +62,44 @@ public class GameManager : MonoBehaviour
     {
         count = 0;
         UpdateCountText();
+        int def = DifficultyButton.difficulty;
+        switch (def)
+        {
+            case 1:
+                maxCount = 5;
+                break;
+            case 2:
+                maxCount = 10;
+                break;
+            case 3:
+                maxCount = 15;
+                break;
+
+        }
+        Debug.Log(DifficultyButton.difficulty);
+
     }
 
+    /*public void StartGame(int def)
+    {
+        count = 0;
+        UpdateCountText();
+        
+        switch(def)
+        {
+            case 1:
+                maxCount = 5;
+                break;
+            case 2:
+                maxCount = 10;
+                break;
+            case 3:
+                maxCount = 15;
+                break;
+
+        }
+    }
+    */
 
 
     void Update()
