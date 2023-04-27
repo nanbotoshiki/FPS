@@ -25,9 +25,10 @@ public class ShellItem : MonoBehaviour
             // 取得したデータを「ss」の箱の中に入れる。
             ss.ShotCount += reward;
             Destroy(gameObject);
-/*ちょっと生成前なので忘れた
             soundManager.Play("playerアイテム取得");
-*/
+            /*ちょっと生成前なので忘れた
+                        soundManager.Play("playerアイテム取得");
+            */
             /*
             AudioSource.PlayClipAtPoint(getSound, Camera.main.transform.position);
 
