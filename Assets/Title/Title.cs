@@ -27,6 +27,10 @@ public class Title : MonoBehaviour
 
     public void GameStart()
     {
+        if(DifficultyButton.difficulty == 0)
+        {
+            return;
+        }
         SceneManager.LoadScene("Stage1");
     }
 

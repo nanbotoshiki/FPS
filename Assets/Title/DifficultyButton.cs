@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class DifficultyButton : MonoBehaviour
 {
+
     //Button button;
     public static int difficulty;
     //public GameManager gameManager;
@@ -22,6 +23,7 @@ public class DifficultyButton : MonoBehaviour
 
     public void ButtonClick(string button)
     {
+
         Debug.Log((string)button);
         switch (button)
         {
@@ -35,6 +37,7 @@ public class DifficultyButton : MonoBehaviour
                 difficulty = 3;
                 break;
         }
+        Debug.Log(difficulty);
     }
     /*void SetDifficulty()
     {
