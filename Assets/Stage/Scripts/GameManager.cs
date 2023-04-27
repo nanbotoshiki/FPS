@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public SoundManager soundManager; //サウンドマネージャー
+
     public GameObject playerPrefab;
     MyStatus script;
 
@@ -160,7 +162,9 @@ public class GameManager : MonoBehaviour
                 }
 
                 yield return new WaitForSeconds(itemSpawnTime);
+                GameObject obj =
                 Instantiate(bulletPrefab, navMeshHit.position, Quaternion.identity);
+                obj.GetComponent<ShellItem>().SetSoundManager(soundManager);
 
 
                 /*bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
