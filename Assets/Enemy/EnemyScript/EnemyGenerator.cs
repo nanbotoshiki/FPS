@@ -6,19 +6,19 @@ using UnityEngine.AI;
 public class EnemyGenerator : MonoBehaviour
 {
 
-    public GameObject prehab;
+    public GameObject enemyPrefab;
     public Transform player;
-    public float spownTimer;    //敵の出現するまでの時間
-    public int limit;           //敵の最大数管理してます。現在10体
-    int counter = 0;            //ゾンビの数を管理する予定です
+    public float enemySpawnTime;    //敵の出現するまでの時間
+    public int enemyLimit;           //敵の最大数管理してます。現在10体
+    int enemyCount = 0;            //ゾンビの数を管理する予定です
 
     IEnumerator Start()
     {
         while (true)
         {
             //指定した秒数毎にインスタンスされます。
-            yield return new WaitForSeconds(spownTimer);
-            if (counter < limit)
+            yield return new WaitForSeconds(enemySpawnTime);
+            if (enemyCount < enemyLimit)
             {
                 float x = Random.Range(-45f, 45f);
                 float y = Random.Range(1f, 2f);
@@ -29,9 +29,9 @@ public class EnemyGenerator : MonoBehaviour
                 if (NavMesh.SamplePosition(spwonPoint, out NavMeshHit navMeshHit, 10.0f, NavMesh.AllAreas))
                 {
                     GameObject enemy =
-                    Instantiate(prehab, navMeshHit.position, Quaternion.LookRotation(player.position));
+                    Instantiate(enemyPrefab, navMeshHit.position, Quaternion.LookRotation(player.position));
                     enemy.GetComponent<EnemyController>().Setplayer(player);
-                    counter++;
+                    enemyCount++;
                 }
             }
         }
