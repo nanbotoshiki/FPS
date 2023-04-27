@@ -48,6 +48,7 @@ public class Shooter : MonoBehaviour
                     //ËŒ‚‚³‚ê‚Ä‚©‚ç3•bŒã‚Ée’e‚ÌƒIƒuƒWƒFƒNƒg‚ğ”j‰ó‚·‚é.
 
                     Destroy(bullet, 3.0f);
+                    soundManager.Play("playerUŒ‚");
                 }
                 else if (animator.GetBool("Aim"))
                 {
@@ -79,13 +80,12 @@ public class Shooter : MonoBehaviour
                     bulletRb.velocity = cameraPosition * shotSpeed;
                     shotInterval = 0;
                     Destroy(bullet, 3.0f);
-                    
+                    soundManager.Play("playerUŒ‚");
                 }
-                soundManager.Play("playerUŒ‚");
             }
-            else
+            else if (ShotCount <= 0)
             {
-                soundManager.Play("player‹…Ø‚ê");
+                soundManager.Play("player’eØ‚ê");
             }
         }
 
