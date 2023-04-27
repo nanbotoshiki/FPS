@@ -40,6 +40,18 @@ public class Title : MonoBehaviour
         titleCanvas.enabled = false;
         soundCanvas.enabled = true;
     }
+
+    public void GoToSound()
+    {
+        titleCanvas.enabled = false;
+        soundCanvas.enabled = true;
+    }
+
+    public void BackToTitle()
+    {
+        soundCanvas.enabled = false;
+        titleCanvas.enabled = true;
+    }
     /*
     public void Right()
     {
