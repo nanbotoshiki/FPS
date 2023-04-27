@@ -6,19 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class Title : MonoBehaviour
 {
-    public GameObject easyButton;
-    public GameObject normalButton;
-    public GameObject hardButton;
-
     public Canvas soundCanvas;
     public Canvas titleCanvas;
 
     void Start()
     {
-        /*normalButton.gameObject.SetActive(true);
-        easyButton.gameObject.SetActive(false);
-        hardButton.gameObject.SetActive(false);
-        */
+
     }
 
     void Update()
@@ -52,18 +45,4 @@ public class Title : MonoBehaviour
         soundCanvas.enabled = false;
         titleCanvas.enabled = true;
     }
-    /*
-    public void Right()
-    {
-        easyButton.gameObject.SetActive(false);
-        normalButton.gameObject.SetActive(false);
-        hardButton.gameObject.SetActive(true);
-    }
-
-    public void Left()
-    {
-        //normalText.enabled = false;
-        //easyText.enabled = true;
-    }
-    */
 }
