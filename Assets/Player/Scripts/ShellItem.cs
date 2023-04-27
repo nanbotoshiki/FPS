@@ -25,7 +25,9 @@ public class ShellItem : MonoBehaviour
             // 取得したデータを「ss」の箱の中に入れる。
             ss.ShotCount += reward;
             Destroy(gameObject);
-            soundManager.Play("playerアイテム取得");
+            //弾薬取得時のSE予定
+            //soundManager.Play("playerアイテム取得");
+            
             /*ちょっと生成前なので忘れた
                         soundManager.Play("playerアイテム取得");
             */
