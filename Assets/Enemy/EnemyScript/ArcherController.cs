@@ -2,46 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-/*
-SEŠÖ˜A‚ğ‚Ğ‚Æ‚Ü‚¸ƒRƒƒ“ƒgƒAƒEƒg 
-’P‘Ì‚Ì‰¹º‚Ì‚İ“K‰’†
- */
 
-
-public class EnemyController_gob : MonoBehaviour
+public class ArcherController : EnemyController
 {
-
-
     NavMeshAgent nav;
     Transform player;
     Animator animator;
     AudioSource source;
     EnemyFire ef;
 
-    //”ÍˆÍ(’l=ƒ[ƒgƒ‹)
-    public float traceDist = 30.0f;//‚Æ‚è‚ ‚¦‚¸ƒ]ƒ“ƒr‚ÌƒvƒŒƒCƒ„[‚ğ”F¯‚·‚é‹——£20m
-    public float RunRange = 15.0f;  //ƒ]ƒ“ƒr‚ª‘–‚èn‚ß‚é‹——£15m
-    public float AttackRange = 12.0f;//‰£‚é—p‚Ì‹——£
+    //ç¯„å›²(å€¤=ãƒ¡ãƒ¼ãƒˆãƒ«)
+    public float traceDist = 30.0f;//ã¨ã‚Šã‚ãˆãšã‚¾ãƒ³ãƒ“ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’èªè­˜ã™ã‚‹è·é›¢20m
+    public float RunRange = 15.0f;  //ã‚¾ãƒ³ãƒ“ãŒèµ°ã‚Šå§‹ã‚ã‚‹è·é›¢15m
+    public float AttackRange = 12.0f;//æ®´ã‚‹ç”¨ã®è·é›¢
     public AudioClip SE1;
 
-    public int hp;
 
 
     private bool isInvincible = false;
 
-    //ƒ]ƒ“ƒr‚ğ“|‚µ‚½‚ÉƒJƒEƒ“ƒg‚·‚é‚½‚ß‚ÉgameManager‚ğ’Ç‰Á
-    GameManager gameManager;
-    GameManager GameManager
-    {
-        get
-        {
-            if (gameManager == null)
-            {
-                gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-            }
-            return gameManager;
-        }
-    }
+   
     //SE
     /*
     public void SE()
@@ -54,16 +34,13 @@ public class EnemyController_gob : MonoBehaviour
         source.PlayOneShot(SE1);
     }
 
-//ƒvƒŒƒCƒ„[”F¯—p
-    public void Setplayer(Transform player)
-    {
-        this.player = player;
-    }
-    //‘–‚é—pŠÖ”
+    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼èªè­˜ç”¨
+   
+    //èµ°ã‚‹ç”¨é–¢æ•°
     public void Run(float dist)
     {
         if (dist < RunRange)
-        { 
+        {
             animator.SetBool("Discover", true);
         }
         else
@@ -71,54 +48,59 @@ public class EnemyController_gob : MonoBehaviour
             animator.SetBool("Discover", false);
         }
     }
-    /*UŒ‚ƒ‚[ƒVƒ‡ƒ“—pŠÖ”
+    //æ”»æ’ƒãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ç”¨é–¢æ•°
     public void Attack(float dist)
     {
         if (dist < AttackRange)
         {
             animator.SetTrigger("Engage");
-            ef.fire();
+            ef.Fire();
         }
         else
         {
             //animator.SetBool("Engage", false);
         }
     }
-    */
-
-    //“|‚ê‚éˆ—//«—ˆ“I‚Ég‚¤‚©‚à‚µ‚ê‚È‚¢‚à‚Ì   
-   /* public void Delite(int hp)
-    {
-        if (hp <= 0)
-        {
-            animator.SetTrigger("dead");
-            
-        }    
-    }
-*/
-
     
+
+    //å€’ã‚Œã‚‹å‡¦ç†//å°†æ¥çš„ã«ä½¿ã†ã‹ã‚‚ã—ã‚Œãªã„ã‚‚ã®   
+    /* public void Delite(int hp)
+     {
+         if (hp <= 0)
+         {
+             animator.SetTrigger("dead");
+
+         }    
+     }
+ */
+
+
 
     void Start()
     {
-    nav = GetComponent<NavMeshAgent>();
-    animator = GetComponent<Animator>();
-    source = GetComponent<AudioSource>();
-    //‹|‚ÉƒAƒ^ƒbƒ`‚µ‚½ƒXƒNƒŠƒvƒg‚ğæ‚èo‚·
-    ef = GameObject.Find("Goblin Necro Bow Quiver").GetComponent<EnemyFire>();
         
-    StartCoroutine(CheckDist());
+        nav = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        source = GetComponent<AudioSource>();
+        
+        //å¼“ã«ã‚¢ã‚¿ãƒƒãƒã—ãŸã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å–ã‚Šå‡ºã™
+        ef = GameObject.Find("Goblin Necro Bow Quiver").GetComponent<EnemyFire>();
+
+        StartCoroutine(CheckDist());
         StartCoroutine(Arrow());
 
     }
 
     IEnumerator CheckDist()
     {
-        while(true)
+        while (true)
         {
-            //1•bŠÔ‚É10‰ñ”­Œ©”»’è
+            //1ç§’é–“ã«10å›ç™ºè¦‹åˆ¤å®š
             yield return new WaitForSeconds(0.1f);
-            
+            if (isInvincible)
+            {
+                yield break;
+            }
 
             GameObject p = GameObject.FindGameObjectWithTag("Player");
             if (p != null)
@@ -128,14 +110,14 @@ public class EnemyController_gob : MonoBehaviour
             float dist =
                 Vector3.Distance
                 (p.transform.position, transform.position);
-            //UŒ‚’†‚Í’â~‚³‚¹‚éAõ“G”ÍˆÍ‚É“ü‚è‚Ü‚µ‚½‚©?
+            //æ”»æ’ƒä¸­ã¯åœæ­¢ã•ã›ã‚‹ã€ç´¢æ•µç¯„å›²ã«å…¥ã‚Šã¾ã—ãŸã‹?
             if (dist < AttackRange)
             {
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
             }
             else if (dist < traceDist)
             {
-                //ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ğ–Ú“I’l‚Éİ’è
+                //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã‚’ç›®çš„å€¤ã«è¨­å®š
                 nav.SetDestination(p.transform.position);
                 nav.isStopped = false;
                 SE();
@@ -145,7 +127,7 @@ public class EnemyController_gob : MonoBehaviour
             {
                 nav.isStopped = true;
             }
-//           SE();
+            //           SE();
         }
     }
 
@@ -153,8 +135,12 @@ public class EnemyController_gob : MonoBehaviour
     {
         while (true)
         {
-            //2•bŠÔ‚É1‰ñ”­Œ©”»’è
+            //2ç§’é–“ã«1å›ç™ºè¦‹åˆ¤å®š
             yield return new WaitForSeconds(2.0f);
+            if (isInvincible)
+            {
+                yield break;
+            }
             GameObject p = GameObject.FindGameObjectWithTag("Player");
             if (p != null)
             {
@@ -166,42 +152,30 @@ public class EnemyController_gob : MonoBehaviour
             if (dist < AttackRange)
             {
                 animator.SetTrigger("Engage");
-                
+
                 ef.Fire();
             }
-           
+
         }
     }
-
-    //“ì•Û’Ç‹L hpƒvƒƒpƒeƒB
-    public int Hp
+    public override void TakeDamage(int damage)
     {
-        get
-        {
-            return hp;
-        }
-        set
-        {
-            hp = value;
-        }
-    }
-   
-
-    //ƒ_ƒ[ƒWˆ—A0‚É‚È‚Á‚½‚ç€–SƒAƒjƒ‚Å3•b‚ÅÁ‚¦‚é
-    public void TakeDamage(int damage)
-    {
+        
         if (isInvincible)
         {
-            return; // –³“Gó‘Ô‚È‚çƒ_ƒ[ƒW‚ğó‚¯‚È‚¢A€‚ñ‚¾‚ç–³“G‚É‚·‚é
+            return; // ç„¡æ•µçŠ¶æ…‹ãªã‚‰ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ãªã„ã€æ­»ã‚“ã ã‚‰ç„¡æ•µã«ã™ã‚‹
         }
+        base.TakeDamage(damage);
         Hp -= damage;
         if (Hp <= 0)
         {
             animator.SetTrigger("dead");
             isInvincible = true;
             Destroy(gameObject, 3.0f);
-            GameManager.Count++;
+            base.GameManager.Count++;
         }
+        
     }
+
 
 }
