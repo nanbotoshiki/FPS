@@ -10,7 +10,9 @@ public class Title : MonoBehaviour
     public GameObject normalButton;
     public GameObject hardButton;
 
-    // Start is called before the first frame update
+    public Canvas soundCanvas;
+    public Canvas titleCanvas;
+
     void Start()
     {
         /*normalButton.gameObject.SetActive(true);
@@ -19,7 +21,6 @@ public class Title : MonoBehaviour
         */
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -34,6 +35,12 @@ public class Title : MonoBehaviour
         SceneManager.LoadScene("Stage1");
     }
 
+    public void SoundButton()
+    {
+        titleCanvas.enabled = false;
+        soundCanvas.enabled = true;
+    }
+    /*
     public void Right()
     {
         easyButton.gameObject.SetActive(false);
@@ -46,4 +53,5 @@ public class Title : MonoBehaviour
         //normalText.enabled = false;
         //easyText.enabled = true;
     }
+    */
 }

@@ -7,25 +7,25 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject playerPrefab;
+    MyStatus script;
+
     //アイテム生成
-    public GameObject bulletPrefab;
-    public float itemSpawnTime;
-    GameObject[] bulletArray;
-    public float itemLimit;
+    public GameObject bulletPrefab; //アイテムのプレハブ　Asset/Stage/Prefabs/Bullet2(1)
+    public float itemSpawnTime;     //アイテムのスポーン時間
+    GameObject[] bulletArray;       //生成したアイテムが入る配列
+    public float itemLimit;         //アイテムの生成上限
 
     //ゾンビ生成
-    public GameObject enemyPrefab;
-    public Transform player;
+    public GameObject enemyPrefab;  //敵のプレハブ　Asset/Enemy/Prehab/Enemy
+    public Transform player;        //プレイヤーの位置？？
     public float enemySpawnTime;    //敵の出現するまでの時間
     public int enemyLimit;           //敵の最大数管理してます。現在10体
     int enemyCount = 0;            //ゾンビの数を管理する予定です
 
-
-
-    float countup = 0.0f;
-    public Text timeText;
-    public Text scoreText;
-    public GameObject difficultyButton;
+    float countup = 0f;           //タイマーの初期設定
+    public Text timeText;           //時間表示のテキスト
+    public Text scoreText;          //クリア時に表示されるスコアのテキスト
     
     //ゲームクリア時に表示されるキャンバス（常にCanvasを非表示にしておく）
     [SerializeField]
@@ -35,8 +35,15 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Canvas gameOverCanvas = null;
 
+    //ゲームプレイ中に表示するUIのキャンバス
     [SerializeField]
     Canvas Canvas_playerst;
+
+    [SerializeField]
+    Canvas Pause;
+
+    [SerializeField]
+    Canvas Resume;
 
     //敵の撃破数
     [SerializeField]
@@ -46,9 +53,12 @@ public class GameManager : MonoBehaviour
     [SerializeField, Min(1)]
     int maxCount = 5;
 
+    //敵の撃破数の初期設定
+    int count = 0;
+
+    //ゲーム終了のフラグ
     bool isGameClear = false;
     bool isGameOver = false;
-    int count = 0;
 
     public int Count
     {
@@ -76,25 +86,49 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
+
         StartCoroutine("GenerateItem");
         StartCoroutine("GanarateEnemy");
 
-        count = 0;
+        //count = 0;
         
-        int def = DifficultyButton.difficulty;
-
+        int def = DifficultyButton.difficulty; //タイトルシーンからdifficultyの数字を取得
+        
+        script = playerPrefab.GetComponent<MyStatus>();
+        //難易度設定項目
         switch (def)
         {
-            case 1:
+            case 1:　//Easy
                 maxCount = 5;
-                break;
-            case 2:
-                maxCount = 10;
-                break;
-            case 3:
-                maxCount = 15;
+                enemyLimit = 10;
+                enemySpawnTime = 5;
+                itemLimit = 5;
+                itemSpawnTime = 5;
                 break;
 
+            case 2: //Normal
+                maxCount = 10;
+                enemyLimit = 20;
+                enemySpawnTime = 4;
+                itemLimit = 4;
+                itemSpawnTime = 4;
+                break;
+
+            case 3: //Hard
+                maxCount = 15;
+                enemyLimit = 30;
+                enemySpawnTime = 3;
+                itemLimit = 3;
+                itemSpawnTime = 3;
+                break;
+            case 4: //Hell
+                maxCount = 30;
+                enemyLimit = 50;
+                enemySpawnTime = 1;
+                itemLimit = 3;
+                itemSpawnTime = 3;
+                script.hp = 50;
+                break;
         }
 
         Debug.Log(DifficultyButton.difficulty);
@@ -102,7 +136,7 @@ public class GameManager : MonoBehaviour
         UpdateCountText();
 
     }
-
+   
     //アイテム生成コルーチン
     IEnumerator GenerateItem()
     {
@@ -174,41 +208,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /*public void StartGame(int def)
-    {
-        count = 0;
-        UpdateCountText();
-        
-        switch(def)
-        {
-            case 1:
-                maxCount = 5;
-                break;
-            case 2:
-                maxCount = 10;
-                break;
-            case 3:
-                maxCount = 15;
-                break;
-
-        }
-    }
-    */
-
 
     void Update()
     {
         //カウントアップの処理
         countup += Time.deltaTime;
         timeText.text = "SCORE" + " " + countup.ToString("f0");
-        //クリアorゲームオーバー時に時間を止める
-        //if (isGameClear || isGameOver)
-        //{
-        //  //Debug.Break();
-        //    Time.timeScale = 0.0f;
-        //    scoreText.text = "Score" + " " + countup.ToString("f0");
-            
-        //}
+
     }
 
     public void GameClear()
@@ -228,8 +234,7 @@ public class GameManager : MonoBehaviour
         Canvas_playerst.enabled = false;
         //カーソル表示させる
         Cursor.lockState = CursorLockMode.None;
-        //弾薬の湧き止める
-
+        //
 
         Time.timeScale = 0.0f;
         scoreText.text = "SCORE" + " " + countup.ToString("f0");
@@ -256,6 +261,7 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
     }
 
+    //Retryボタンを押したとき
     public void Retry()
     {
         Time.timeScale = 1.0f;
@@ -263,11 +269,30 @@ public class GameManager : MonoBehaviour
         
     }
 
+    //Quitボタンを押したとき
     public void Quit()
     {
+        DifficultyButton.difficulty = 0;
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("Title");
     }
+
+    public void PauseGame()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
+        Pause.enabled = false;
+        Resume.enabled = true;
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        Pause.enabled = true;
+        Resume.enabled = false;
+    }
+
+    //プレイヤーUIの撃破数を更新
     public void UpdateCountText()
     {
         countText.text = count.ToString() + "/" + maxCount.ToString();
