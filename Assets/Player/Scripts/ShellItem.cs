@@ -11,7 +11,10 @@ public class ShellItem : MonoBehaviour
     Shooter ss;
     private int reward = 20;
 
-    
+    [SerializeField]
+    private SoundManager soundManager; //サウンドマネージャー
+
+
     void OnCollisionEnter(Collision other)
     {
         ss = GameObject.Find("Shooter").GetComponent<Shooter>();
@@ -22,6 +25,12 @@ public class ShellItem : MonoBehaviour
             // 取得したデータを「ss」の箱の中に入れる。
             ss.ShotCount += reward;
             Destroy(gameObject);
+            //弾薬取得時のSE予定
+            //soundManager.Play("playerアイテム取得");
+            
+            /*ちょっと生成前なので忘れた
+                        soundManager.Play("playerアイテム取得");
+            */
             /*
             AudioSource.PlayClipAtPoint(getSound, Camera.main.transform.position);
 
