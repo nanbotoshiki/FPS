@@ -11,9 +11,9 @@ public class ZombieController : EnemyController
     AudioSource source;
 
     //範囲(値=メートル)
-    public float traceDist = 30.0f;//�Ƃ肠�����]���r�̃v���C���[��F�����鋗��20m
-    public float RunRange = 10.0f;  //�]���r������n�߂鋗��15m
-    public float AttackRange = 5.0f;//����p�̋���
+    public float traceDist = 30.0f;
+    public float RunRange = 10.0f;
+    public float AttackRange = 5.0f;
     public AudioClip SE1;
 
     /*
@@ -22,22 +22,6 @@ public class ZombieController : EnemyController
     */
 
     private bool isInvincible = false;
-
-    
-    //SE
-    /*
-    public void SE()
-    {
-        EnemySoundEffect.instance.PlaySE();
-    }
-    */
-    /*
-    public void SE()
-    {
-        source.PlayOneShot(SE1);
-    }
-    */
-
 
     //走る用関数
     public void Run(float dist)
@@ -69,19 +53,7 @@ public class ZombieController : EnemyController
             animator.SetBool("Engage", false);
         }
     }
-    //倒れる処理//将来的に使うかもしれないもの    
-    /* public void Delite(int hp)
-     {
-         if (hp <= 0)
-         {
-             animator.SetTrigger("dead");
-
-         }    
-     }
- */
-
-
-
+    
     void Start()
     {
         
@@ -105,7 +77,7 @@ public class ZombieController : EnemyController
     {
         while (true)
         {
-            //1�b�Ԃ�10�񔭌�����
+            //1秒間に10回発見判定
             yield return new WaitForSeconds(0.1f);
             if (isInvincible)
             {
@@ -116,17 +88,7 @@ public class ZombieController : EnemyController
             {
                 transform.LookAt(p.transform);
             }
-            /*
-             if (p == null)
-            {
-                continue;
-            }
-            if (nav.enabled)
-            {
-                nav.SetDestination(p.transform.position);
-            }
-             */
-
+           
             float dist =
                 Vector3.Distance
                 (p.transform.position, transform.position);
@@ -136,14 +98,12 @@ public class ZombieController : EnemyController
                 //�v���C���[�̈ʒu��ړI�l�ɐݒ�
                 nav.SetDestination(p.transform.position);
                 nav.isStopped = false;
-                //SE();
                 Run(dist);
             }
             else
             {
                 nav.isStopped = true;
             }
-            //           SE();
         }
     }
 
