@@ -40,6 +40,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Canvas gameOverCanvas = null;
 
+    //ポーズ画面時のキャンバス（常にCanvasを非表示にしておく）
+    [SerializeField]
+    Canvas pauseCanvas = null;
+
     //ゲームプレイ中に表示するUIのキャンバス
     [SerializeField]
     Canvas Canvas_playerst;
@@ -275,8 +279,7 @@ public class GameManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
-        pause.enabled = false;
-        resume.enabled = true;
+        pauseCanvas.enabled = true;
 
         isPause = true;
     }
@@ -285,8 +288,7 @@ public class GameManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;
-        pause.enabled = true;
-        resume.enabled = false;
+        pauseCanvas.enabled = false;
 
         isPause = false;
     }
