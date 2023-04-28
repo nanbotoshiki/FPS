@@ -12,6 +12,7 @@ public class Shooter : MonoBehaviour
     private float shotInterval;
     public GameObject muzzelSpawn;
     private GameObject holdFlash;
+    GameManager gameManager;
 
     //[SerializeField]
     //private SoundManager soundManager; //サウンドマネージャー
@@ -19,6 +20,7 @@ public class Shooter : MonoBehaviour
     void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
 
@@ -29,6 +31,10 @@ public class Shooter : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
+            if (gameManager.isPause)
+            {
+                return;
+            }
 
             shotInterval += 5 * Time.deltaTime;
 
