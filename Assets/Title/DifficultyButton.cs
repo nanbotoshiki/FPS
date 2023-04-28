@@ -7,19 +7,7 @@ using UnityEngine.SceneManagement;
 public class DifficultyButton : MonoBehaviour
 {
 
-    //Button button;
     public static int difficulty;
-    //public GameManager gameManager;
-
-    /*private void Awake()
-    {
-        DontDestroyOnLoad(this);
-    }*/
-    void Start()
-    {
-       // button = GetComponent<Button>();
-        //button.onClick.AddListener(SetDifficulty);
-    }
 
     public void ButtonClick(string button)
     {
@@ -39,11 +27,4 @@ public class DifficultyButton : MonoBehaviour
         }
         Debug.Log(difficulty);
     }
-    /*void SetDifficulty()
-    {
-        SceneManager.LoadScene("Stage1");
-        //GameMnager.StartGame(difficulty);
-    }*/
-
-
 }

@@ -9,8 +9,11 @@ public class GameManager : MonoBehaviour
 {
     public SoundManager soundManager; //サウンドマネージャー
 
-    public GameObject playerPrefab;
-    MyStatus script;
+    //public GameObject playerPrefab;
+    //MyStatus script;
+
+    //MyStatus ms;
+    //EnemyController ec;
 
     //アイテム生成
     public GameObject bulletPrefab; //アイテムのプレハブ　Asset/Stage/Prefabs/Bullet2(1)
@@ -42,10 +45,12 @@ public class GameManager : MonoBehaviour
     Canvas Canvas_playerst;
 
     [SerializeField]
-    Canvas Pause;
+    Canvas pause;
 
     [SerializeField]
-    Canvas Resume;
+    Canvas resume;
+
+    public bool isPause = false;
 
     //敵の撃破数
     [SerializeField]
@@ -92,11 +97,12 @@ public class GameManager : MonoBehaviour
         StartCoroutine("GenerateItem");
         StartCoroutine("GanarateEnemy");
 
+
         //count = 0;
         
         int def = DifficultyButton.difficulty; //タイトルシーンからdifficultyの数字を取得
         
-        script = playerPrefab.GetComponent<MyStatus>();
+        //script = playerPrefab.GetComponent<MyStatus>();
         //難易度設定項目
         switch (def)
         {
@@ -106,6 +112,8 @@ public class GameManager : MonoBehaviour
                 enemySpawnTime = 5;
                 itemLimit = 5;
                 itemSpawnTime = 5;
+                //ms.Hp = 100;
+                //ec.Hp = 10;
                 break;
 
             case 2: //Normal
@@ -114,6 +122,8 @@ public class GameManager : MonoBehaviour
                 enemySpawnTime = 4;
                 itemLimit = 4;
                 itemSpawnTime = 4;
+                //ms.Hp = 100;
+                //ec.Hp = 20;
                 break;
 
             case 3: //Hard
@@ -122,6 +132,8 @@ public class GameManager : MonoBehaviour
                 enemySpawnTime = 3;
                 itemLimit = 3;
                 itemSpawnTime = 3;
+                //ms.Hp = 50;
+                //ec.Hp = 30;
                 break;
             case 4: //Hell
                 maxCount = 30;
@@ -129,12 +141,14 @@ public class GameManager : MonoBehaviour
                 enemySpawnTime = 1;
                 itemLimit = 3;
                 itemSpawnTime = 3;
-                script.hp = 50;
+                //ms.Hp = 50;
+                //ec.Hp = 40;
                 break;
         }
 
         Debug.Log(DifficultyButton.difficulty);
         Debug.Log(maxCount);
+        //Debug.Log(ms.Hp);
         UpdateCountText();
 
     }
@@ -145,7 +159,7 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
-            //Debug.Log(bulletArray.Length);
+
             if (bulletArray.Length < itemLimit)
             {
 
@@ -166,20 +180,6 @@ public class GameManager : MonoBehaviour
                 Instantiate(bulletPrefab, navMeshHit.position, Quaternion.identity);
                 obj.GetComponent<ShellItem>().SetSoundManager(soundManager);
 
-
-                /*bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
-                Debug.Log(bulletArray.Length);
-
-                while (bulletArray.Length >= itemLimit)
-                {
-                    yield return new WaitForSeconds(1.0f);
-                    bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
-                    if (bulletArray.Length < itemLimit)
-                    {
-                        Debug.Log(bulletArray.Length);
-                        break;
-                    }
-                }*/
             }
             yield return null;
         }
@@ -225,20 +225,13 @@ public class GameManager : MonoBehaviour
     {
         if(isGameClear || isGameOver)
         {
-
             return;
         }
 
-
         //クリア後の処理
-        //freezeUpdate = true;
-        //ゲームクリアUIの表示
-        gameClearCanvas.enabled = true;
-        //クリア後にプレイヤーUIを非表示
-        Canvas_playerst.enabled = false;
-        //カーソル表示させる
-        Cursor.lockState = CursorLockMode.None;
-        //
+        gameClearCanvas.enabled = true;         //ゲームクリアUIの表示
+        Canvas_playerst.enabled = false;        //クリア後にプレイヤーUIを非表示
+        Cursor.lockState = CursorLockMode.None; //カーソル表示させる
 
         Time.timeScale = 0.0f;
         scoreText.text = "SCORE" + " " + countup.ToString("f0");
@@ -254,13 +247,10 @@ public class GameManager : MonoBehaviour
         }
 
         // ゲームオーバー後の処理
-        //freezeUpdate = true;
-        //ゲームオーバーUIの表示
-        gameOverCanvas.enabled = true;
-        //ゲームオーバー後にプレイヤーUIを非表示
-        Canvas_playerst.enabled = false;
-        //カーソル表示させる
-        Cursor.lockState = CursorLockMode.None;
+        gameOverCanvas.enabled = true;                  //ゲームオーバーUIの表示
+        Canvas_playerst.enabled = false;                //ゲームオーバー後にプレイヤーUIを非表示
+        Cursor.lockState = CursorLockMode.None;         //カーソル表示させる
+
         Time.timeScale = 0.0f;
         isGameOver = true;
     }
@@ -285,15 +275,20 @@ public class GameManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
-        Pause.enabled = false;
-        Resume.enabled = true;
+        pause.enabled = false;
+        resume.enabled = true;
+
+        isPause = true;
     }
 
     public void ResumeGame()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;
-        Pause.enabled = true;
-        Resume.enabled = false;
+        pause.enabled = true;
+        resume.enabled = false;
+
+        isPause = false;
     }
 
     //プレイヤーUIの撃破数を更新
