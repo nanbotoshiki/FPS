@@ -8,6 +8,8 @@ public class Title : MonoBehaviour
 {
     public Canvas soundCanvas;
     public Canvas titleCanvas;
+    [SerializeField]
+    private SoundManager soundManager; //サウンドマネージャー
 
     void Start()
     {
@@ -25,6 +27,7 @@ public class Title : MonoBehaviour
         {
             return;
         }
+        soundManager.Play("決定");
         SceneManager.LoadScene("Stage1");
     }
 
