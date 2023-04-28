@@ -7,18 +7,16 @@ public class ZombieController : EnemyController
 {
     NavMeshAgent nav;
     Animator animator;
-    AudioSource source;
 
     //範囲(値=メートル)
     public float traceDist = 30.0f;
     public float RunRange = 10.0f;
     public float AttackRange = 5.0f;
-    public AudioClip SE1;
 
-    /*
     private Collider leftHandCollider;
     private Collider rightHandCollider;
-    */
+    private bool isDead = false;
+    
 
     private bool isInvincible = false;
 
@@ -38,6 +36,10 @@ public class ZombieController : EnemyController
     //攻撃モーション用関数
     public void Attack(float dist)
     {
+        if (isInvincible)
+        {
+            return;
+        }
         if (dist < AttackRange)
         {
             /*
@@ -58,14 +60,13 @@ public class ZombieController : EnemyController
         
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
         animator = GetComponent<Animator>();
-        source = GetComponent<AudioSource>();
         
 
         //敵の攻撃の当たり判定を取得
-        /*
+        
         leftHandCollider = GameObject.Find("Base HumanLArmPalm").GetComponent<CapsuleCollider>();
         rightHandCollider = GameObject.Find("Base HumanRArmPalm").GetComponent<CapsuleCollider>();
-        */
+        
         //Setplayer(player);
 
         StartCoroutine(CheckDist());
@@ -80,6 +81,8 @@ public class ZombieController : EnemyController
             yield return new WaitForSeconds(0.1f);
             if (isInvincible)
             {
+                leftHandCollider.enabled = false;
+                rightHandCollider.enabled = false;
                 yield break;
             }
             GameObject p = GameObject.FindGameObjectWithTag("Player");
@@ -118,6 +121,7 @@ public class ZombieController : EnemyController
         if (Hp <= 0)
         {
             animator.SetTrigger("dead");
+            isDead = true;
             isInvincible = true;
             Destroy(gameObject, 3.0f);
             base.GameManager.Count++;
