@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour
                 {
                     GameObject enemy =
                     Instantiate(enemyPrefab, navMeshHit.position, Quaternion.LookRotation(player.position));
-                    enemy.GetComponent<EnemyController>().Setplayer(player);
+                    //enemy.GetComponent<EnemyController>().Setplayer(player);
                     enemyCount++;
                 }
             }

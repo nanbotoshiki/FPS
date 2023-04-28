@@ -30,7 +30,6 @@ public class EnemyGenerator : MonoBehaviour
                 {
                     GameObject enemy =
                     Instantiate(enemyPrefab, navMeshHit.position, Quaternion.LookRotation(player.position));
-                    enemy.GetComponent<EnemyController>().Setplayer(player);
                     enemyCount++;
                 }
             }

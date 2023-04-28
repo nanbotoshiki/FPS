@@ -40,12 +40,6 @@ public class EnemyController : MonoBehaviour
         }
     }
     
-//プレイヤー認識用(これもいらんかも、Generatorと一緒に消す
-    public void Setplayer(Transform player)
-    {
-        this.player = player;
-    }
-   
     //南保追記 hpプロパティ
     public int Hp
     {

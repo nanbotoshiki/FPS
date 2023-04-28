@@ -22,7 +22,7 @@ public class Konami : MonoBehaviour
 
     private void Start()
     {
-        keyCodes = (int[])Enum.GetValues(typeof(KeyCode));
+       // keyCodes = (int[])Enum.GetValues(typeof(KeyCode));
     }
 
     void Update()
