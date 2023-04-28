@@ -46,12 +46,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Canvas Canvas_playerst;
 
-    [SerializeField]
-    Canvas pause;
-
-    [SerializeField]
-    Canvas resume;
-
     public bool isPause = false;
 
     //“G‚ÌŒ‚”j”
