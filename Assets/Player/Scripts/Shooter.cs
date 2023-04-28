@@ -12,6 +12,7 @@ public class Shooter : MonoBehaviour
     private float shotInterval;
     public GameObject muzzelSpawn;
     private GameObject holdFlash;
+    GameManager gameManager;
 
     [SerializeField]
     private SoundManager soundManager; //ƒTƒEƒ“ƒhƒ}ƒl[ƒWƒƒ[
@@ -19,6 +20,7 @@ public class Shooter : MonoBehaviour
     void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
 
@@ -29,6 +31,10 @@ public class Shooter : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
+            if (gameManager.isPause)
+            {
+                return;
+            }
 
             shotInterval += 5 * Time.deltaTime;
 
@@ -48,7 +54,7 @@ public class Shooter : MonoBehaviour
                     //ËŒ‚‚³‚ê‚Ä‚©‚ç3•bŒã‚Ée’e‚ÌƒIƒuƒWƒFƒNƒg‚ğ”j‰ó‚·‚é.
 
                     Destroy(bullet, 3.0f);
-                    soundManager.Play("playerUŒ‚");
+                    //soundManager.Play("playerUŒ‚");
                 }
                 else if (animator.GetBool("Aim"))
                 {
@@ -80,12 +86,12 @@ public class Shooter : MonoBehaviour
                     bulletRb.velocity = cameraPosition * shotSpeed;
                     shotInterval = 0;
                     Destroy(bullet, 3.0f);
-                    soundManager.Play("playerUŒ‚");
+                    //soundManager.Play("playerUŒ‚");
                 }
             }
             else if (ShotCount <= 0)
             {
-                soundManager.Play("player’eØ‚ê");
+                //soundManager.Play("player’eØ‚ê");
             }
         }
 

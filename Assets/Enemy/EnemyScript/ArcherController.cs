@@ -11,16 +11,12 @@ public class ArcherController : EnemyController
     EnemyFire ef;
 
     //範囲(値=メートル)
-    public float traceDist = 30.0f;//とりあえずゾンビのプレイヤーを認識する距離20m
-    public float RunRange = 15.0f;  //ゾンビが走り始める距離15m
-    public float AttackRange = 12.0f;//殴る用の距離
-
-
+    public float traceDist = 30.0f;
+    public float RunRange = 15.0f; 
+    public float AttackRange = 12.0f;
 
     private bool isInvincible = false;
 
-    //プレイヤー認識用
-   
     //走る用関数
     public void Run(float dist)
     {
@@ -41,26 +37,7 @@ public class ArcherController : EnemyController
             animator.SetTrigger("Engage");
             ef.Fire();
         }
-        else
-        {
-            //animator.SetBool("Engage", false);
-        }
     }
-    
-
-    //倒れる処理//将来的に使うかもしれないもの   
-    /* public void Delite(int hp)
-     {
-         if (hp <= 0)
-         {
-             animator.SetTrigger("dead");
-
-         }    
-     }
- */
-
-
-
     void Start()
     {
         

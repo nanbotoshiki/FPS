@@ -20,10 +20,10 @@ public class EnemyFire : MonoBehaviour
 
         Rigidbody arrowRb = arrow.GetComponent<Rigidbody>();
 
-        // ミサイルを飛ばす方向を決める。「forward」は「z軸」方向をさす（ポイント）
+        // 飛ばす方向を決める。「forward」は「z軸」方向をさす（ポイント）
         arrowRb.AddForce(transform.forward * speed);
 
-        // ３秒後に敵のミサイルを削除する。
+        // ３秒後に削除する。
         Destroy(arrow, 3.0f);
     }
 
