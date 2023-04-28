@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
     bool isGameClear = false;
     bool isGameOver = false;
 
+    private Vector3 cursorPos;
+
     public int Count
     {
         set
@@ -301,6 +303,8 @@ public class GameManager : MonoBehaviour
         pauseCanvas.enabled = true;
 
         isPause = true;
+
+        cursorPos = Input.mousePosition;
     }
 
     public void ResumeGame()
@@ -310,6 +314,17 @@ public class GameManager : MonoBehaviour
         pauseCanvas.enabled = false;
 
         isPause = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        Vector3 delta = Input.mousePosition - cursorPos;
+        Camera.main.transform.Rotate(Vector3.up, delta.x);
     }
 
     //プレイヤーUIの撃破数を更新

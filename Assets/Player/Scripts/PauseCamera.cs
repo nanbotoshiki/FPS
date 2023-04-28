@@ -10,7 +10,12 @@ public class PauseCamera : MonoBehaviour
 
     void Start()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+        if (gameManager == null)
+        {
+            Debug.LogError("PauseCamera: GameManagerが見つかりませんでした。");
+            enabled = false; // このスクリプトを無効にする
+        }
     }
 
     // 毎フレーム呼び出される関数

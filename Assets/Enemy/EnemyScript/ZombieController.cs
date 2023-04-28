@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class ZombieController : EnemyController
 {
     NavMeshAgent nav;
-    Transform player;
     Animator animator;
     AudioSource source;
 
