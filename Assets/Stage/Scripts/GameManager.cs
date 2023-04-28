@@ -248,10 +248,14 @@ public class GameManager : MonoBehaviour
         Canvas_playerst.enabled = false;        //クリア後にプレイヤーUIを非表示
         Cursor.lockState = CursorLockMode.None; //カーソル表示させる
 
+        isPause = true;
+
         Time.timeScale = 0.0f;
         scoreText.text = "SCORE" + " " + countup.ToString("f0");
 
         isGameClear = true;
+
+        SoundManager.instance.Play("StageClear");
     }
 
     public void GameOver()
@@ -266,8 +270,12 @@ public class GameManager : MonoBehaviour
         Canvas_playerst.enabled = false;                //ゲームオーバー後にプレイヤーUIを非表示
         Cursor.lockState = CursorLockMode.None;         //カーソル表示させる
 
+        isPause = true;
+
         Time.timeScale = 0.0f;
         isGameOver = true;
+
+        SoundManager.instance.Play("GameOver");
     }
 
     //Retryボタンを押したとき
