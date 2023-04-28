@@ -223,6 +223,14 @@ public class GameManager : MonoBehaviour
         countup += Time.deltaTime;
         timeText.text = "SCORE" + " " + countup.ToString("f0");
 
+        if (Input.GetButtonDown("p"))
+        {
+            if(isPause == false)
+            {
+                PauseGame();
+            }
+        }
+
     }
 
     public void GameClear()
