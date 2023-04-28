@@ -14,8 +14,8 @@ public class Shooter : MonoBehaviour
     private GameObject holdFlash;
     GameManager gameManager;
 
-    [SerializeField]
-    private SoundManager soundManager; //サウンドマネージャー
+    //[SerializeField]
+    //private SoundManager soundManager; //サウンドマネージャー
 
     void Awake()
     {
