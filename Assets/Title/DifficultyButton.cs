@@ -26,6 +26,9 @@ public class DifficultyButton : MonoBehaviour
             case "Hard":
                 difficulty = 3;
                 break;
+            case "Hell":
+                difficulty = 4;
+                break;
         }
         soundManager.Play("“ïˆÕ“x‘I‘ð");
         Debug.Log(difficulty);

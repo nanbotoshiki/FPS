@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Konami : MonoBehaviour
 {
+    [SerializeField]
+    Canvas hiddenButton;
+
     int cmdSeq = 0;
     int[] keyCodes;
     int[] konamiCommand = new[] {
@@ -38,7 +42,8 @@ public class Konami : MonoBehaviour
                     if (cmdSeq == konamiCommand.Length)
                     {
                         kcnt++;
-                        print("konami!! " + kcnt);
+                        //print("konami!! " + kcnt);
+                        hiddenButton.enabled = true;
                         cmdSeq = 0;
                     }
                 }
