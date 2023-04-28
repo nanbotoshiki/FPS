@@ -13,8 +13,8 @@ public class Shooter : MonoBehaviour
     public GameObject muzzelSpawn;
     private GameObject holdFlash;
 
-    [SerializeField]
-    private SoundManager soundManager; //サウンドマネージャー
+    //[SerializeField]
+    //private SoundManager soundManager; //サウンドマネージャー
 
     void Awake()
     {
@@ -48,7 +48,7 @@ public class Shooter : MonoBehaviour
                     //射撃されてから3秒後に銃弾のオブジェクトを破壊する.
 
                     Destroy(bullet, 3.0f);
-                    soundManager.Play("player攻撃");
+                    //soundManager.Play("player攻撃");
                 }
                 else if (animator.GetBool("Aim"))
                 {
@@ -80,12 +80,12 @@ public class Shooter : MonoBehaviour
                     bulletRb.velocity = cameraPosition * shotSpeed;
                     shotInterval = 0;
                     Destroy(bullet, 3.0f);
-                    soundManager.Play("player攻撃");
+                    //soundManager.Play("player攻撃");
                 }
             }
             else if (ShotCount <= 0)
             {
-                soundManager.Play("player弾切れ");
+                //soundManager.Play("player弾切れ");
             }
         }
 
