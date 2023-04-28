@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class AppearItems : MonoBehaviour
 {
     public GameObject bulletPrefab;
-    public float itemSpawnTime;
+    public float span;
     GameObject[] bulletArray;
     public float itemLimit;
     
@@ -23,7 +23,7 @@ public class AppearItems : MonoBehaviour
         while (true)
         {
             bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
-            //Debug.Log(bulletArray.Length);
+            Debug.Log(bulletArray.Length);
             if (bulletArray.Length < itemLimit)
             {
                 
@@ -39,7 +39,7 @@ public class AppearItems : MonoBehaviour
                     }
                 }
 
-                yield return new WaitForSeconds(itemSpawnTime);
+                yield return new WaitForSeconds(span);
                 Instantiate(bulletPrefab, navMeshHit.position, Quaternion.identity);
 
 
