@@ -8,34 +8,15 @@ public class ArcherController : EnemyController
     NavMeshAgent nav;
     Transform player;
     Animator animator;
-    AudioSource source;
     EnemyFire ef;
 
     //範囲(値=メートル)
-    public float traceDist = 30.0f;//とりあえずゾンビのプレイヤーを認識する距離20m
-    public float RunRange = 15.0f;  //ゾンビが走り始める距離15m
-    public float AttackRange = 12.0f;//殴る用の距離
-    public AudioClip SE1;
-
-
+    public float traceDist = 30.0f;
+    public float RunRange = 15.0f; 
+    public float AttackRange = 12.0f;
 
     private bool isInvincible = false;
 
-   
-    //SE
-    /*
-    public void SE()
-    {
-        EnemySoundEffect.instance.PlaySE();
-    }
-    */
-    public void SE()
-    {
-        source.PlayOneShot(SE1);
-    }
-
-    //プレイヤー認識用
-   
     //走る用関数
     public void Run(float dist)
     {
@@ -56,32 +37,12 @@ public class ArcherController : EnemyController
             animator.SetTrigger("Engage");
             ef.Fire();
         }
-        else
-        {
-            //animator.SetBool("Engage", false);
-        }
     }
-    
-
-    //倒れる処理//将来的に使うかもしれないもの   
-    /* public void Delite(int hp)
-     {
-         if (hp <= 0)
-         {
-             animator.SetTrigger("dead");
-
-         }    
-     }
- */
-
-
-
     void Start()
     {
         
         nav = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        source = GetComponent<AudioSource>();
         
         //弓にアタッチしたスクリプトを取り出す
         ef = GameObject.Find("Goblin Necro Bow Quiver").GetComponent<EnemyFire>();
@@ -120,14 +81,12 @@ public class ArcherController : EnemyController
                 //プレイヤーの位置を目的値に設定
                 nav.SetDestination(p.transform.position);
                 nav.isStopped = false;
-                SE();
                 Run(dist);
             }
             else
             {
                 nav.isStopped = true;
             }
-            //           SE();
         }
     }
 

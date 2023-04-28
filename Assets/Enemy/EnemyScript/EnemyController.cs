@@ -10,27 +10,21 @@ SE関連をひとまずコメントアウト
 
 public class EnemyController : MonoBehaviour
 {
-
-
-    NavMeshAgent nav;
     Transform player;
+    /*
+    NavMeshAgent nav;
+    
     Animator animator;
     AudioSource source;
+    */
 
     //範囲(値=メートル)
     /*
     public float traceDist;
     public float RunRange;
     public float AttackRange;
-    public AudioClip SE1;
-
     */
     public int hp = 10;
-
-    private Collider leftHandCollider;
-    private Collider rightHandCollider;
-
-    private bool isInvincible = false;
 
     //ゾンビを倒した時にカウントするためにgameManagerを追加
     GameManager gameManager;
@@ -45,44 +39,13 @@ public class EnemyController : MonoBehaviour
             return gameManager;
         }
     }
-    //SE
-    /*
-    public void SE()
-    {
-        EnemySoundEffect.instance.PlaySE();
-    }
-    */
-   
-//プレイヤー認識用
+    
+//プレイヤー認識用(これもいらんかも、Generatorと一緒に消す
     public void Setplayer(Transform player)
     {
         this.player = player;
     }
    
-    
-    //倒れる処理//将来的に使うかもしれないもの   
-   /* public void Delite(int hp)
-    {
-        if (hp <= 0)
-        {
-            animator.SetTrigger("dead");
-            
-        }    
-    }
-*/
-
-    
-
-    void Start()
-    {
-    
-
-   
-
-
-    }
-
-
     //南保追記 hpプロパティ
     public int Hp
     {
@@ -96,8 +59,6 @@ public class EnemyController : MonoBehaviour
         }
     }
    
-
-    //ダメージ処理、0になったら死亡アニメで3秒で消える
     public virtual void TakeDamage(int damage)
     {
         

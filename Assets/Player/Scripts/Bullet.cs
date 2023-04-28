@@ -43,10 +43,5 @@ public class Bullet : MonoBehaviour
         
     }
 
-    // ’e‚ÌˆÚ“®ˆ—
-    void Update()
-    {
-        
-    }
 }
 
