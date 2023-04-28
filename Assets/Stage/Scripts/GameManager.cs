@@ -8,11 +8,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    //public GameObject playerPrefab;
-    //MyStatus script;//
+    public GameObject playerPrefab;
+    MyStatus ms;
+    EnemyController ec;
 
-    //MyStatus ms;
-    //EnemyController ec;
 
     //アイテム生成
     public GameObject bulletPrefab; //アイテムのプレハブ　Asset/Stage/Prefabs/Bullet2(1)
@@ -105,7 +104,8 @@ public class GameManager : MonoBehaviour
         
         int def = DifficultyButton.difficulty; //タイトルシーンからdifficultyの数字を取得
         
-        //script = playerPrefab.GetComponent<MyStatus>();
+        ms = playerPrefab.GetComponent<MyStatus>();
+        ec = enemyPrefab.GetComponent<EnemyController>();
         //難易度設定項目
         switch (def)
         {
@@ -115,8 +115,8 @@ public class GameManager : MonoBehaviour
                 enemySpawnTime = 5;
                 itemLimit = 5;
                 itemSpawnTime = 5;
-                //ms.Hp = 100;
-                //ec.Hp = 10;
+                ms.Hp = 100;
+                ec.Hp = 10;
                 break;
 
             case 2: //Normal
@@ -125,8 +125,8 @@ public class GameManager : MonoBehaviour
                 enemySpawnTime = 4;
                 itemLimit = 4;
                 itemSpawnTime = 4;
-                //ms.Hp = 100;
-                //ec.Hp = 20;
+                ms.Hp = 100;
+                ec.Hp = 20;
                 break;
 
             case 3: //Hard
@@ -135,8 +135,8 @@ public class GameManager : MonoBehaviour
                 enemySpawnTime = 3;
                 itemLimit = 3;
                 itemSpawnTime = 3;
-                //ms.Hp = 50;
-                //ec.Hp = 30;
+                ms.Hp = 50;
+                ec.Hp = 30;
                 break;
             case 4: //Hell
                 maxCount = 30;
@@ -144,8 +144,8 @@ public class GameManager : MonoBehaviour
                 enemySpawnTime = 1;
                 itemLimit = 3;
                 itemSpawnTime = 3;
-                //ms.Hp = 50;
-                //ec.Hp = 40;
+                ms.Hp = 50;
+                ec.Hp = 40;
                 break;
         }
 
