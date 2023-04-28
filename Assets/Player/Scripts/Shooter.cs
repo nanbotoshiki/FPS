@@ -6,7 +6,15 @@ public class Shooter : MonoBehaviour
 {
 
     public int shotCount = 50;
-    const int MaxShotCount = 100;
+    private int MaxShotCount = 100;
+    public int MaxShot
+    {
+        get{return MaxShotCount; }
+        private set{}
+    
+    } 
+        
+    
     public GameObject bulletPrefab;
     public float shotSpeed;
     private float shotInterval;
@@ -14,8 +22,6 @@ public class Shooter : MonoBehaviour
     private GameObject holdFlash;
     GameManager gameManager;
 
-    //[SerializeField]
-    //private SoundManager soundManager; //サウンドマネージャー
 
     void Awake()
     {
