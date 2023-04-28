@@ -30,6 +30,10 @@ public class ShellItem : MonoBehaviour
             Destroy(gameObject);
             //弾薬取得時のSE予定
             SoundManager.instance.Play("playerアイテム取得");
+            if (ss.ShotCount >= ss.MaxShot)
+            {
+                ss.ShotCount = ss.MaxShot;
+            }
 
             /*ちょっと生成前なので忘れた
                         soundManager.Play("playerアイテム取得");
