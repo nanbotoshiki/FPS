@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class ArcherController : EnemyController
 {
     NavMeshAgent nav;
-    Transform player;
     Animator animator;
     EnemyFire ef;
 

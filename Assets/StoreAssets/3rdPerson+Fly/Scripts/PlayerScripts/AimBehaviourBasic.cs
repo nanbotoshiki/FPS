@@ -7,21 +7,21 @@ public class AimBehaviourBasic : GenericBehaviour
 	public string aimButton = "Aim", shoulderButton = "Aim Shoulder";     // Default aim and switch shoulders buttons.
 	public Texture2D crosshair;                                           // Crosshair texture.
 	public float aimTurnSmoothing = 0.15f;                                // Speed of turn response when aiming to match camera facing.
-	public Vector3 aimPivotOffset = new Vector3(0.5f, 1.2f,  0f);         // Offset to repoint the camera when aiming.
-	public Vector3 aimCamOffset   = new Vector3(0f, 0.4f, -0.7f);         // Offset to relocate the camera when aiming.
+	public Vector3 aimPivotOffset = new Vector3(0.5f, 1.2f, 0f);         // Offset to repoint the camera when aiming.
+	public Vector3 aimCamOffset = new Vector3(0f, 0.4f, -0.7f);         // Offset to relocate the camera when aiming.
 
 	private int aimBool;                                                  // Animator variable related to aiming.
 	private bool aim;                                                     // Boolean to determine whether or not the player is aiming.
 
 	// Start is always called after any Awake functions.
-	void Start ()
+	void Start()
 	{
 		// Set up the references.
 		aimBool = Animator.StringToHash("Aim");
 	}
 
 	// Update is used to set features regardless the active behaviour.
-	void Update ()
+	void Update()
 	{
 		// Activate/deactivate aim by input.
 		if (Input.GetAxisRaw(aimButton) != 0 && !aim)
@@ -37,14 +37,14 @@ public class AimBehaviourBasic : GenericBehaviour
 		canSprint = !aim;
 
 		// Toggle camera aim position left or right, switching shoulders.
-		if (aim && Input.GetButtonDown (shoulderButton))
+		if (aim && Input.GetButtonDown(shoulderButton))
 		{
 			aimCamOffset.x = aimCamOffset.x * (-1);
 			aimPivotOffset.x = aimPivotOffset.x * (-1);
 		}
 
 		// Set aim boolean on the Animator Controller.
-		behaviourManager.GetAnim.SetBool (aimBool, aim);
+		behaviourManager.GetAnim.SetBool(aimBool, aim);
 	}
 
 	// Co-rountine to start aiming mode with delay.
@@ -84,8 +84,8 @@ public class AimBehaviourBasic : GenericBehaviour
 	public override void LocalFixedUpdate()
 	{
 		// Set camera position and orientation to the aim mode parameters.
-		if(aim)
-			behaviourManager.GetCamScript.SetTargetOffsets (aimPivotOffset, aimCamOffset);
+		if (aim)
+			behaviourManager.GetCamScript.SetTargetOffsets(aimPivotOffset, aimCamOffset);
 	}
 
 	// LocalLateUpdate: manager is called here to set player rotation after camera rotates, avoiding flickering.
@@ -110,7 +110,7 @@ public class AimBehaviourBasic : GenericBehaviour
 		forward = forward.normalized;
 
 		// Always rotates the player according to the camera horizontal rotation in aim mode.
-		Quaternion targetRotation =  Quaternion.Euler(0, behaviourManager.GetCamScript.GetH, 0);
+		Quaternion targetRotation = Quaternion.Euler(0, behaviourManager.GetCamScript.GetH, 0);
 
 		float minSpeed = Quaternion.Angle(transform.rotation, targetRotation) * aimTurnSmoothing;
 
@@ -120,8 +120,8 @@ public class AimBehaviourBasic : GenericBehaviour
 
 	}
 
- 	// Draw the crosshair when aiming.
-	void OnGUI () 
+	// Draw the crosshair when aiming.
+	void OnGUI()
 	{
 		if (crosshair)
 		{

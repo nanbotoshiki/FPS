@@ -28,6 +28,10 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 
 	// Get the camera horizontal angle.
 	public float GetH { get { return angleH; } }
+	GameManager gameManager;
+
+	//private Vector3 previousPosition; // 前フレームのカメラ位置を記憶するための変数
+	//private Quaternion previousRotation; // 前フレームのカメラ回転を記憶するための変数
 
 	void Awake()
 	{
@@ -52,6 +56,7 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 		if (camOffset.y > 0)
 			Debug.LogWarning("Vertical Cam Offset (Y) will be ignored during collisions!\n" +
 				"It is recommended to set all vertical offset in Pivot Offset.");
+		gameManager = GameObject.FindObjectOfType<GameManager>();
 	}
 
 	void Update()
@@ -103,10 +108,26 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 		smoothCamOffset = Vector3.Lerp(smoothCamOffset, customOffsetCollision ? Vector3.zero : noCollisionOffset, smooth * Time.deltaTime);
 
 		cam.position =  player.position + camYRotation * smoothPivotOffset + aimRotation * smoothCamOffset;
-	}
 
-	// Set camera offsets to custom values.
-	public void SetTargetOffsets(Vector3 newPivotOffset, Vector3 newCamOffset)
+		/* ポーズでカメラ止めるためのもの、ポーズ誤カメラ動くので消す
+		if (gameManager.isPause)
+		{
+			transform.position = previousPosition;
+			transform.rotation = previousRotation;
+		}
+		*/
+		
+	}
+	/* ポーズでカメラ止めるためのもの、ポーズ誤カメラ動くので消す
+	private void FixedUpdate()
+	{
+		previousPosition = cam.position;
+		previousRotation = cam.rotation;
+	}
+	*/
+
+		// Set camera offsets to custom values.
+		public void SetTargetOffsets(Vector3 newPivotOffset, Vector3 newCamOffset)
 	{
 		targetPivotOffset = newPivotOffset;
 		targetCamOffset = newCamOffset;
