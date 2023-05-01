@@ -9,7 +9,8 @@ public class Title : MonoBehaviour
     public Canvas soundCanvas;
     public Canvas titleCanvas;
     [SerializeField]
-    private SoundManager soundManager; //サウンドマネージャー
+
+//    private SoundManager soundManager; //サウンドマネージャー旧型
 
     void Start()
     {
@@ -27,7 +28,8 @@ public class Title : MonoBehaviour
         {
             return;
         }
-        soundManager.Play("ゲームスタート");
+        //soundManager.Play("ゲームスタート");旧型
+        SoundManager.instance.Play("ゲームスタート");
         SceneManager.LoadScene("Stage1");
     }
 
@@ -41,13 +43,15 @@ public class Title : MonoBehaviour
     {
         titleCanvas.enabled = false;
         soundCanvas.enabled = true;
-        soundManager.Play("選択");
+        //        soundManager.Play("選択");旧型
+        SoundManager.instance.Play("選択");
     }
 
     public void BackToTitle()
     {
         soundCanvas.enabled = false;
         titleCanvas.enabled = true;
-        soundManager.Play("選択");
+        //        soundManager.Play("選択");旧型
+        SoundManager.instance.Play("選択");
     }
 }

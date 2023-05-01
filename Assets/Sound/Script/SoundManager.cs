@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
+    public Slider slider;
+
     //System.で宣言する事で、インスペクターから値をセットできる。
     [System.Serializable]
     public class SoundData
@@ -27,18 +30,21 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private float playableDistance = 0.2f;
 
-    //やっぱりスタティック使うととても簡単。
+    //やっぱりスタティックを使うと、他で定義する時とても簡単。
     public static SoundManager instance;
 
     private void Awake()
     {
+
         //シングルトンパターン
-        if(instance == null)
+        if (instance == null)
         { 
             //auidioSourceList配列の数だけAudioSourceを自分自身に生成して配列に格納
             for (var i = 0; i < audioSourceList.Length; ++i)
             {
                 audioSourceList[i] = gameObject.AddComponent<AudioSource>();
+                audioSourceList[i] = gameObject.GetComponent<AudioSource>();
+                Debug.Log("拾ったよ");
             }
 
             //soundDictionaryにセット
@@ -47,6 +53,7 @@ public class SoundManager : MonoBehaviour
                 soundDictionary.Add(soundData.name, soundData);
             }
             instance = this;
+
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -90,5 +97,15 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void SoundSliderOnValueChange(float newSliderValue)
+    {
+        
+        
+        for (var i = 0; i < audioSourceList.Length; ++i)
+        {
+            audioSourceList[i].volume = newSliderValue;
+            Debug.Log("変更したよ");
+        }
+    }
 
 }
