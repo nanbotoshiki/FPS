@@ -30,7 +30,7 @@ public class DifficultyButton : MonoBehaviour
                 difficulty = 4;
                 break;
         }
-        soundManager.Play("“ïˆÕ“x‘I‘ð");
+        soundManager.Play("‘I‘ð");
         Debug.Log(difficulty);
     }
 }

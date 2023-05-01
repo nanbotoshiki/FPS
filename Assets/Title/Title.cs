@@ -27,7 +27,7 @@ public class Title : MonoBehaviour
         {
             return;
         }
-        soundManager.Play("決定");
+        soundManager.Play("ゲームスタート");
         SceneManager.LoadScene("Stage1");
     }
 
@@ -41,11 +41,13 @@ public class Title : MonoBehaviour
     {
         titleCanvas.enabled = false;
         soundCanvas.enabled = true;
+        soundManager.Play("選択");
     }
 
     public void BackToTitle()
     {
         soundCanvas.enabled = false;
         titleCanvas.enabled = true;
+        soundManager.Play("選択");
     }
 }

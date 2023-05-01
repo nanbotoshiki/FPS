@@ -17,8 +17,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private SoundData[] soundDatas;
 
-    //AudioSource（スピーカー）を同時に鳴らしたい音の数だけ用意
-    private AudioSource[] audioSourceList = new AudioSource[20];
+    //AudioSource（スピーカー）を同時に鳴らしたい音の数だけ用意(20は多すぎたんでとりあえず10まで減らした)
+    private AudioSource[] audioSourceList = new AudioSource[10];
 
     //別名(name)をキーとした管理用Dictionary
     private Dictionary<string, SoundData> soundDictionary = new Dictionary<string, SoundData>();
@@ -27,6 +27,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private float playableDistance = 0.2f;
 
+    //やっぱりスタティック使うととても簡単。
     public static SoundManager instance;
 
     private void Awake()
