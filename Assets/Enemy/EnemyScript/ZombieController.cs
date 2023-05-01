@@ -15,7 +15,6 @@ public class ZombieController : EnemyController
 
     private Collider leftHandCollider;
     private Collider rightHandCollider;
-    private bool isDead = false;
     
 
     private bool isInvincible = false;
@@ -94,10 +93,9 @@ public class ZombieController : EnemyController
             float dist =
                 Vector3.Distance
                 (p.transform.position, transform.position);
-            //���G�͈͂ɓ���܂�����?
             if (dist < traceDist)
             {
-                //�v���C���[�̈ʒu��ړI�l�ɐݒ�
+               
                 nav.SetDestination(p.transform.position);
                 nav.isStopped = false;
                 Run(dist);
@@ -121,7 +119,7 @@ public class ZombieController : EnemyController
         if (Hp <= 0)
         {
             animator.SetTrigger("dead");
-            isDead = true;
+            animator.SetBool("isDead", true);
             isInvincible = true;
             Destroy(gameObject, 3.0f);
             base.GameManager.Count++;
