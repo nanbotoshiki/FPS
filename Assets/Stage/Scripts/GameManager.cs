@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     public int enemyLimit;           //敵の最大数管理してます。現在10体
     int enemyCount = 0;            //ゾンビの数を管理する予定です
 
-    float countup = 0f;           //タイマーの初期設定
+    public float countup = 0f;           //タイマーの初期設定
     public Text timeText;           //時間表示のテキスト
     public Text scoreText;          //クリア時に表示されるスコアのテキスト
     
