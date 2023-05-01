@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
+    //スライダーが必要なので
+    public Slider slider;
+
     //System.で宣言する事で、インスペクターから値をセットできる。
     [System.Serializable]
     public class SoundData
@@ -17,8 +21,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private SoundData[] soundDatas;
 
-    //AudioSource（スピーカー）を同時に鳴らしたい音の数だけ用意
-    private AudioSource[] audioSourceList = new AudioSource[20];
+    //AudioSource（スピーカー）を同時に鳴らしたい音の数だけ用意(20は多すぎたんでとりあえず10まで減らした)
+    private AudioSource[] audioSourceList = new AudioSource[10];
 
     //別名(name)をキーとした管理用Dictionary
     private Dictionary<string, SoundData> soundDictionary = new Dictionary<string, SoundData>();
@@ -27,17 +31,21 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private float playableDistance = 0.2f;
 
+    //やっぱりスタティックを使うと、他で定義する時とても簡単。
     public static SoundManager instance;
 
     private void Awake()
     {
+
         //シングルトンパターン
-        if(instance == null)
+        if (instance == null)
         { 
             //auidioSourceList配列の数だけAudioSourceを自分自身に生成して配列に格納
             for (var i = 0; i < audioSourceList.Length; ++i)
             {
                 audioSourceList[i] = gameObject.AddComponent<AudioSource>();
+                
+                Debug.Log("拾ったよ");
             }
 
             //soundDictionaryにセット
@@ -46,6 +54,7 @@ public class SoundManager : MonoBehaviour
                 soundDictionary.Add(soundData.name, soundData);
             }
             instance = this;
+
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -89,5 +98,16 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    //音量調整するスライダー用
+    public void SoundSliderOnValueChange(float newSliderValue)
+    {
+
+
+        for (var i = 0; i < audioSourceList.Length; ++i)
+        {
+            audioSourceList[i].volume = newSliderValue;
+            Debug.Log("変更したよ");
+        }
+    }
 
 }
