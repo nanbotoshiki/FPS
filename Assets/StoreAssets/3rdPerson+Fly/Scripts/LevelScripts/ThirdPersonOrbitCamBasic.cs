@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
 // This class corresponds to the 3rd person camera features.
-public class ThirdPersonOrbitCamBasic : MonoBehaviour 
+public class ThirdPersonOrbitCamBasic : MonoBehaviour
 {
 	public Transform player;                                           // Player's reference.
-	public Vector3 pivotOffset = new Vector3(0.0f, 1.7f,  0.0f);       // Offset to repoint the camera.
-	public Vector3 camOffset   = new Vector3(0.0f, 0.0f, -3.0f);       // Offset to relocate the camera related to the player position.
+	public Vector3 pivotOffset = new Vector3(0.0f, 1.7f, 0.0f);       // Offset to repoint the camera.
+	public Vector3 camOffset = new Vector3(0.0f, 0.0f, -3.0f);       // Offset to relocate the camera related to the player position.
 	public float smooth = 10f;                                         // Speed of camera responsiveness.
 	public float horizontalAimingSpeed = 6f;                           // Horizontal turn speed.
 	public float verticalAimingSpeed = 6f;                             // Vertical turn speed.
@@ -28,10 +28,6 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 
 	// Get the camera horizontal angle.
 	public float GetH { get { return angleH; } }
-	GameManager gameManager;
-
-	//private Vector3 previousPosition; // 前フレームのカメラ位置を記憶するための変数
-	//private Quaternion previousRotation; // 前フレームのカメラ回転を記憶するための変数
 
 	void Awake()
 	{
@@ -48,15 +44,14 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 		defaultFOV = cam.GetComponent<Camera>().fieldOfView;
 		angleH = player.eulerAngles.y;
 
-		ResetTargetOffsets ();
-		ResetFOV ();
+		ResetTargetOffsets();
+		ResetFOV();
 		ResetMaxVerticalAngle();
 
 		// Check for no vertical offset.
 		if (camOffset.y > 0)
 			Debug.LogWarning("Vertical Cam Offset (Y) will be ignored during collisions!\n" +
 				"It is recommended to set all vertical offset in Pivot Offset.");
-		gameManager = GameObject.FindObjectOfType<GameManager>();
 	}
 
 	void Update()
@@ -78,21 +73,13 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 		cam.rotation = aimRotation;
 
 		// Set FOV.
-		cam.GetComponent<Camera>().fieldOfView = Mathf.Lerp (cam.GetComponent<Camera>().fieldOfView, targetFOV,  Time.deltaTime);
+		cam.GetComponent<Camera>().fieldOfView = Mathf.Lerp(cam.GetComponent<Camera>().fieldOfView, targetFOV, Time.deltaTime);
 
 		// Test for collision with the environment based on current camera position.
 		Vector3 baseTempPosition = player.position + camYRotation * targetPivotOffset;
 		Vector3 noCollisionOffset = targetCamOffset;
 		while (noCollisionOffset.magnitude >= 0.2f)
 		{
-			if (noCollisionOffset.magnitude > 0)
-			{
-				noCollisionOffset -= noCollisionOffset.normalized * 0.2f;
-			}
-			else
-			{
-				break;
-			}
 			if (DoubleViewingPosCheck(baseTempPosition + aimRotation * noCollisionOffset))
 				break;
 			noCollisionOffset -= noCollisionOffset.normalized * 0.2f;
@@ -107,27 +94,11 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 		smoothPivotOffset = Vector3.Lerp(smoothPivotOffset, customOffsetCollision ? pivotOffset : targetPivotOffset, smooth * Time.deltaTime);
 		smoothCamOffset = Vector3.Lerp(smoothCamOffset, customOffsetCollision ? Vector3.zero : noCollisionOffset, smooth * Time.deltaTime);
 
-		cam.position =  player.position + camYRotation * smoothPivotOffset + aimRotation * smoothCamOffset;
-
-		/* ポーズでカメラ止めるためのもの、ポーズ誤カメラ動くので消す
-		if (gameManager.isPause)
-		{
-			transform.position = previousPosition;
-			transform.rotation = previousRotation;
-		}
-		*/
-		
+		cam.position = player.position + camYRotation * smoothPivotOffset + aimRotation * smoothCamOffset;
 	}
-	/* ポーズでカメラ止めるためのもの、ポーズ誤カメラ動くので消す
-	private void FixedUpdate()
-	{
-		previousPosition = cam.position;
-		previousRotation = cam.rotation;
-	}
-	*/
 
-		// Set camera offsets to custom values.
-		public void SetTargetOffsets(Vector3 newPivotOffset, Vector3 newCamOffset)
+	// Set camera offsets to custom values.
+	public void SetTargetOffsets(Vector3 newPivotOffset, Vector3 newCamOffset)
 	{
 		targetPivotOffset = newPivotOffset;
 		targetCamOffset = newCamOffset;
@@ -187,11 +158,11 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 	// Double check for collisions: concave objects doesn't detect hit from outside, so cast in both directions.
 	bool DoubleViewingPosCheck(Vector3 checkPos)
 	{
-		return ViewingPosCheck (checkPos) && ReverseViewingPosCheck (checkPos);
+		return ViewingPosCheck(checkPos) && ReverseViewingPosCheck(checkPos);
 	}
 
 	// Check for collision from camera to player.
-	bool ViewingPosCheck (Vector3 checkPos)
+	bool ViewingPosCheck(Vector3 checkPos)
 	{
 		// Cast target and direction.
 		Vector3 target = player.position + pivotOffset;
@@ -200,7 +171,7 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 		if (Physics.SphereCast(checkPos, 0.2f, direction, out RaycastHit hit, direction.magnitude))
 		{
 			// ... if it is not the player...
-			if(hit.transform != player && !hit.transform.GetComponent<Collider>().isTrigger)
+			if (hit.transform != player && !hit.transform.GetComponent<Collider>().isTrigger)
 			{
 				// This position isn't appropriate.
 				return false;
@@ -218,7 +189,7 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 		Vector3 direction = checkPos - origin;
 		if (Physics.SphereCast(origin, 0.2f, direction, out RaycastHit hit, direction.magnitude))
 		{
-			if(hit.transform != player && hit.transform != transform && !hit.transform.GetComponent<Collider>().isTrigger)
+			if (hit.transform != player && hit.transform != transform && !hit.transform.GetComponent<Collider>().isTrigger)
 			{
 				return false;
 			}
@@ -229,6 +200,6 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 	// Get camera magnitude.
 	public float GetCurrentPivotMagnitude(Vector3 finalPivotOffset)
 	{
-		return Mathf.Abs ((finalPivotOffset - smoothPivotOffset).magnitude);
+		return Mathf.Abs((finalPivotOffset - smoothPivotOffset).magnitude);
 	}
 }
