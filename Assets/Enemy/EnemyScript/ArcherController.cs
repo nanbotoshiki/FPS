@@ -29,6 +29,7 @@ public class ArcherController : EnemyController
         }
     }
     //攻撃モーション用関数
+    /*
     public void Attack(float dist)
     {
         if (dist < AttackRange)
@@ -37,6 +38,7 @@ public class ArcherController : EnemyController
             ef.Fire();
         }
     }
+    */
     void Start()
     {
         
@@ -73,7 +75,8 @@ public class ArcherController : EnemyController
             //攻撃中は停止させる、索敵範囲に入りましたか?
             if (dist < AttackRange)
             {
-                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                //nav.isStopped = true;
+                //GetComponent<Rigidbody>().velocity = Vector3.zero;
             }
             else if (dist < traceDist)
             {
@@ -110,7 +113,7 @@ public class ArcherController : EnemyController
             if (dist < AttackRange)
             {
                 animator.SetTrigger("Engage");
-
+                nav.isStopped = true;
                 ef.Fire();
             }
 
