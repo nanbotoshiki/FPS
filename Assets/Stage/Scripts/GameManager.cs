@@ -46,8 +46,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Canvas Canvas_playerst;
 
-    public bool isPause = false;
-
     //敵の撃破数
     [SerializeField]
     Text countText = null;
@@ -62,6 +60,8 @@ public class GameManager : MonoBehaviour
     //ゲーム終了のフラグ
     bool isGameClear = false;
     bool isGameOver = false;
+
+    public bool isPause = false;
 
     private Vector3 cursorPos;
 
@@ -90,25 +90,27 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
+        //bulletArray = GameObject.FindGameObjectsWithTag("Bullet");
+        //count = 0;
 
         StartCoroutine("GenerateItem");
         StartCoroutine("GanarateEnemy");
+        StartCoroutine("CountUpTime");
+        StartCoroutine("Pause");
 
 
-        //count = 0;
         
         int def = DifficultyButton.difficulty; //タイトルシーンからdifficultyの数字を取得
         
-        ms = playerPrefab.GetComponent<MyStatus>();
-        ec = enemyPrefab.GetComponent<EnemyController>();
+        ms = playerPrefab.GetComponent<MyStatus>(); //プレイヤーのHP取得用
+        ec = enemyPrefab.GetComponent<EnemyController>();　//敵のHP取得用
         //難易度設定項目
         switch (def)
         {
             case 1:　//Easy
                 maxCount = 5;
                 enemyLimit = 10;
-                enemySpawnTime = 5;
+                enemySpawnTime = 8;
                 itemLimit = 5;
                 itemSpawnTime = 5;
                 ms.Hp = 100;
@@ -118,9 +120,9 @@ public class GameManager : MonoBehaviour
             case 2: //Normal
                 maxCount = 10;
                 enemyLimit = 20;
-                enemySpawnTime = 4;
+                enemySpawnTime = 5;
                 itemLimit = 4;
-                itemSpawnTime = 4;
+                itemSpawnTime = 5;
                 ms.Hp = 100;
                 ec.Hp = 20;
                 break;
@@ -128,25 +130,26 @@ public class GameManager : MonoBehaviour
             case 3: //Hard
                 maxCount = 15;
                 enemyLimit = 30;
-                enemySpawnTime = 3;
+                enemySpawnTime = 2;
                 itemLimit = 3;
-                itemSpawnTime = 3;
+                itemSpawnTime = 10;
                 ms.Hp = 50;
                 ec.Hp = 30;
                 break;
+
             case 4: //Hell
                 maxCount = 30;
                 enemyLimit = 50;
                 enemySpawnTime = 1;
                 itemLimit = 3;
-                itemSpawnTime = 3;
+                itemSpawnTime = 20;
                 ms.Hp = 50;
                 ec.Hp = 40;
                 break;
         }
 
-        Debug.Log(DifficultyButton.difficulty);
-        Debug.Log(maxCount);
+        //Debug.Log(DifficultyButton.difficulty);
+        //Debug.Log(maxCount);
         //Debug.Log(ms.Hp);
         UpdateCountText();
 
@@ -211,14 +214,47 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator CountUpTime()
+    {
+        yield return null;
+        while (true)
+        {
+            countup += Time.deltaTime;
+            timeText.text = "TIME" + " " + countup.ToString("f0");
+            yield return null;
+
+        }
+    }
+
+    IEnumerator Pause()
+    {
+        yield return null;
+
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                if (isPause == false)
+                {
+                    PauseGame();
+                }
+                else
+                {
+                    ResumeGame();
+                }
+            }
+            yield return null;
+        }
+    }
+
 
     void Update()
     {
         //カウントアップの処理
-        countup += Time.deltaTime;
-        timeText.text = "SCORE" + " " + countup.ToString("f0");
+        //countup += Time.deltaTime;
+        //timeText.text = "SCORE" + " " + countup.ToString("f0");
 
-        if (Input.GetKeyDown(KeyCode.P))
+        /*if (Input.GetKeyDown(KeyCode.P))
         {
             if(isPause == false)
             {
@@ -228,7 +264,8 @@ public class GameManager : MonoBehaviour
             {
                 ResumeGame();
             }
-        }
+        }*/
+        //Debug.Log(enemyCount);
 
     }
 
