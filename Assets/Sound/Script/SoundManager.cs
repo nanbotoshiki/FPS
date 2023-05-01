@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
+    //スライダーが必要なので
     public Slider slider;
 
     //System.で宣言する事で、インスペクターから値をセットできる。
@@ -43,7 +44,7 @@ public class SoundManager : MonoBehaviour
             for (var i = 0; i < audioSourceList.Length; ++i)
             {
                 audioSourceList[i] = gameObject.AddComponent<AudioSource>();
-                audioSourceList[i] = gameObject.GetComponent<AudioSource>();
+                
                 Debug.Log("拾ったよ");
             }
 
@@ -97,10 +98,11 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    //音量調整するスライダー用
     public void SoundSliderOnValueChange(float newSliderValue)
     {
-        
-        
+
+
         for (var i = 0; i < audioSourceList.Length; ++i)
         {
             audioSourceList[i].volume = newSliderValue;
