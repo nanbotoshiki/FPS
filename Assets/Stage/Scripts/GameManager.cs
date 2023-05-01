@@ -7,11 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
+    Ranking ranking;
     public GameObject playerPrefab;
     MyStatus ms;
     EnemyController ec;
-
 
     //アイテム生成
     public GameObject bulletPrefab; //アイテムのプレハブ　Asset/Stage/Prefabs/Bullet2(1)
@@ -45,6 +44,10 @@ public class GameManager : MonoBehaviour
     //ゲームプレイ中に表示するUIのキャンバス
     [SerializeField]
     Canvas Canvas_playerst;
+    
+    [SerializeField]
+    Canvas rankingCanvas;
+
 
     //敵の撃破数
     [SerializeField]
@@ -102,8 +105,8 @@ public class GameManager : MonoBehaviour
         
         int def = DifficultyButton.difficulty; //タイトルシーンからdifficultyの数字を取得
         
-        ms = playerPrefab.GetComponent<MyStatus>(); //プレイヤーのHP取得用
-        ec = enemyPrefab.GetComponent<EnemyController>();　//敵のHP取得用
+        //ms = playerPrefab.GetComponent<MyStatus>(); //プレイヤーのHP取得用
+        //ec = enemyPrefab.GetComponent<EnemyController>();　//敵のHP取得用
         //難易度設定項目
         switch (def)
         {
@@ -288,6 +291,8 @@ public class GameManager : MonoBehaviour
 
         isGameClear = true;
 
+        ranking.SetRanking(countup);
+
         SoundManager.instance.Play("StageClear");
     }
 
@@ -356,6 +361,14 @@ public class GameManager : MonoBehaviour
 
         Vector3 delta = Input.mousePosition - cursorPos;
         Camera.main.transform.Rotate(Vector3.up, delta.x);
+    }
+
+    public void Ranking()
+    {
+        ranking.GetRanking();
+        rankingCanvas.enabled = true;
+        gameClearCanvas.enabled = false;
+
     }
 
     //プレイヤーUIの撃破数を更新
