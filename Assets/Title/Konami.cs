@@ -22,7 +22,7 @@ public class Konami : MonoBehaviour
         (int)KeyCode.B,
         (int)KeyCode.A
     };
-    int kcnt = 0;
+    //int kcnt = 0;
 
     private void Start()
     {
@@ -41,7 +41,7 @@ public class Konami : MonoBehaviour
                     cmdSeq++;
                     if (cmdSeq == konamiCommand.Length)
                     {
-                        kcnt++;
+                        //kcnt++;
                         //print("konami!! " + kcnt);
                         hiddenButton.enabled = true;
                         cmdSeq = 0;
