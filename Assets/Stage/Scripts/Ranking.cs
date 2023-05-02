@@ -6,10 +6,7 @@ using System.Collections.Generic;
 public class Ranking : MonoBehaviour
 {
     public GameObject gameManager;
-    GameManager gm;
-
-    [SerializeField]
-    int point;
+    //GameManager gm;
 
     //string[] ranking = { "ランキング1位", "ランキング2位", "ランキング3位", "ランキング4位", "ランキング5位" };
 
@@ -17,8 +14,8 @@ public class Ranking : MonoBehaviour
 
     [SerializeField]
     string[,] ranking = new string[4,5];
-    [SerializeField]
-    Text[,] rankingText = new Text[4,5];
+    //[SerializeField]
+    //Text[,] rankingText = new Text[4,5];
     [SerializeField]
     float[,] rankingValue = new float[4,5];
 
@@ -29,20 +26,20 @@ public class Ranking : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        gm = gameManager.GetComponent<GameManager>();
+        //gm = gameManager.GetComponent<GameManager>();
 
-        GetRanking();
+        //GetRanking();
 
-        SetRanking(gm.countup);
+        //SetRanking(gm.countup);
 
         /*for (int i = 0; i < rankingText.GetLength(0); i++)
         {
             rankingText[dif,i].text = rankingValue[dif,i].ToString();
         }*/
-        for (int i = 0; i < rknm.Length; i++)
-        {
-            rknm[dif].rkText[i].text = rankingValue[dif,i].ToString();
-        }
+        //for (int i = 0; i < rknm.Length; i++)
+       // {
+       //     rknm[dif].rkText[i].text = rankingValue[dif,i].ToString();
+       // }
     }
 
     /// <summary>
@@ -50,6 +47,13 @@ public class Ranking : MonoBehaviour
     /// </summary>
     public void GetRanking()
     {
+        //gm = gameManager.GetComponent<GameManager>();
+
+        for (int i = 0; i < rknm.Length; i++)
+        {
+            rknm[dif].rkText[i].text = rankingValue[dif, i].ToString();
+        }
+
 
         //ランキング呼び出し
         for (int i = 0; i < rknm.Length; i++)

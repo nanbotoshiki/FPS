@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    Ranking ranking;
+    public GameObject ranking;
+    Ranking rk;
     public GameObject playerPrefab;
     MyStatus ms;
     EnemyController ec;
@@ -105,8 +106,8 @@ public class GameManager : MonoBehaviour
         
         int def = DifficultyButton.difficulty; //タイトルシーンからdifficultyの数字を取得
         
-        //ms = playerPrefab.GetComponent<MyStatus>(); //プレイヤーのHP取得用
-        //ec = enemyPrefab.GetComponent<EnemyController>();　//敵のHP取得用
+        ms = playerPrefab.GetComponent<MyStatus>(); //プレイヤーのHP取得用
+        ec = enemyPrefab.GetComponent<EnemyController>();　//敵のHP取得用
         //難易度設定項目
         switch (def)
         {
@@ -291,7 +292,9 @@ public class GameManager : MonoBehaviour
 
         isGameClear = true;
 
-        ranking.SetRanking(countup);
+        rk = ranking.GetComponent<Ranking>();
+        rk.SetRanking(countup);
+        Debug.Log(countup);
 
         SoundManager.instance.Play("StageClear");
     }
@@ -365,9 +368,9 @@ public class GameManager : MonoBehaviour
 
     public void Ranking()
     {
-        ranking.GetRanking();
-        rankingCanvas.enabled = true;
+        rk.GetRanking();
         gameClearCanvas.enabled = false;
+        rankingCanvas.enabled = true;
 
     }
 
