@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject ranking;
     Ranking rk;
+
     public GameObject playerPrefab;
     MyStatus ms;
     EnemyController ec;
@@ -288,13 +289,15 @@ public class GameManager : MonoBehaviour
         isPause = true;
 
         Time.timeScale = 0.0f;
-        scoreText.text = "SCORE" + " " + countup.ToString("f0");
+        scoreText.text = "TIME" + " " + countup.ToString("f0");
 
         isGameClear = true;
 
         rk = ranking.GetComponent<Ranking>();
-        rk.SetRanking(countup);
-        Debug.Log(countup);
+        int ctup = (int)countup;
+        rk.SetRanking(ctup);
+        rk.GetRanking();
+        Debug.Log(ctup);
 
         SoundManager.instance.Play("StageClear");
     }
@@ -374,6 +377,11 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void LeaveRank()
+    {
+        gameClearCanvas.enabled = true;
+        rankingCanvas.enabled = false;
+    }
     //プレイヤーUIの撃破数を更新
     public void UpdateCountText()
     {
