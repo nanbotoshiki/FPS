@@ -6,7 +6,7 @@ public class Shooter : MonoBehaviour
 {
 
     public int shotCount = 50;
-    private int MaxShotCount = 100;
+    private int MaxShotCount = 99;
     public int MaxShot
     {
         get{return MaxShotCount; }
