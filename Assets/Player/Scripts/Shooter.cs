@@ -6,7 +6,7 @@ public class Shooter : MonoBehaviour
 {
 
     public int shotCount = 50;
-    private int MaxShotCount = 100;
+    private int MaxShotCount = 99;
     public int MaxShot
     {
         get{return MaxShotCount; }
@@ -64,21 +64,6 @@ public class Shooter : MonoBehaviour
                 }
                 else if (animator.GetBool("Aim"))
                 {
-                    /*  完全にカメラの中心から玉を出すスクリプト
-                    // カメラの位置と向きを取得する
-                    Vector3 cameraPosition = Camera.main.transform.position;
-                    Vector3 cameraForward = Camera.main.transform.forward;
-
-                    // 弾の発射位置をカメラの位置に設定する
-                    Vector3 startPos = cameraPosition;
-
-                    // カメラの向いている方向に向かって発射する
-                    GameObject bullet = Instantiate(bulletPrefab, startPos, Quaternion.identity);
-                    Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-                    bulletRb.velocity = cameraForward * shotSpeed;
-                    shotInterval = 0;
-                    Destroy(bullet, 3.0f);
-                    */
                     //射撃エフェクト
                     holdFlash = Instantiate(muzzelSpawn, transform.position, muzzelSpawn.transform.rotation * Quaternion.Euler(0, 0, 90)) as GameObject;
 
@@ -105,13 +90,6 @@ public class Shooter : MonoBehaviour
         {
             shotInterval = 2.0f;
         }
-
-        /* リロードは4.19に削除（残玉はアイテム取得で回復
-        else if (Input.GetKeyDown(KeyCode.R))
-        {
-            shotCount = 30;
-        }
-        */
        
     }
 

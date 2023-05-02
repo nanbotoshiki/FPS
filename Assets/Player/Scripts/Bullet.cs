@@ -6,17 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public GameObject bloodEffect;
     public GameObject decalHitWall;
-    Shooter ss;
-
-   
-    // 弾のエフェクト
-    //public GameObject effect;
-
-    void Start()
-    {
-        ss = GameObject.Find("Shooter").GetComponent<Shooter>();
-    }
-
+    
     // 弾の当たり判定処理
     void OnCollisionEnter(Collision collision)
     {
