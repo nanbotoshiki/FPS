@@ -80,6 +80,7 @@ public class ZombieController : EnemyController
             yield return new WaitForSeconds(0.1f);
             if (isInvincible)
             {
+                if (rightHandCollider != null)
                 {
                     leftHandCollider.enabled = false;
                 }
