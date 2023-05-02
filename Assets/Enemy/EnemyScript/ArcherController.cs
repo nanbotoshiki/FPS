@@ -130,6 +130,7 @@ public class ArcherController : EnemyController
         Hp -= damage;
         if (Hp <= 0)
         {
+            SoundManager.instance.Play("ゴブリン死亡");
             animator.SetTrigger("dead");
             isInvincible = true;
             Destroy(gameObject, 3.0f);
