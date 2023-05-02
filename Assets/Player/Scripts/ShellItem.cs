@@ -4,20 +4,10 @@ using UnityEngine;
 
 public class ShellItem : MonoBehaviour
 {
-    /*
-    public AudioClip getSound;
-    public GameObject effectPrefab;
-    */
+    
     Shooter ss;
     private int reward = 20;
-/*
-    private SoundManager soundManager; //サウンドマネージャー
-                                       
-    public void SetSoundManager(SoundManager sm)
-    {
-        this.soundManager = sm;
-    }
-*/    
+    
     void OnCollisionEnter(Collision other)
     {
         ss = GameObject.Find("Shooter").GetComponent<Shooter>();
@@ -35,15 +25,7 @@ public class ShellItem : MonoBehaviour
                 ss.ShotCount = ss.MaxShot;
             }
 
-            /*ちょっと生成前なので忘れた
-                        soundManager.Play("playerアイテム取得");
-            */
-            /*
-            AudioSource.PlayClipAtPoint(getSound, Camera.main.transform.position);
-
-            GameObject effect = Instantiate(effectPrefab, transform.position, Quaternion.identity);
-            Destroy(effect, 0.5f);
-            */
+            
         }
     }
 }

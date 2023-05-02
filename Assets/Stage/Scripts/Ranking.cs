@@ -6,76 +6,40 @@ using System.Collections.Generic;
 public class Ranking : MonoBehaviour
 {
     public GameObject gameManager;
-    //GameManager gm;
-
-    //string[] ranking = { "ランキング1位", "ランキング2位", "ランキング3位", "ランキング4位", "ランキング5位" };
 
     int dif = DifficultyButton.difficulty -1;
 
     [SerializeField]
-    string[,] ranking = new string[5,4];
-
-    //[SerializeField]
-    //Text[,] rankingText = new Text[4,5];
+    int[,] rankingValue = new int[5, 4];
 
     [SerializeField]
-    string[,] rankingValue = new string[5, 4];
-    //float[,] rankingValue = new float[4,5];
+    Text[] rankText = new Text[5];
 
     //[SerializeField]
-    //TextArray[] rknm = new TextArray[4];
-
-    //string[,] highScores = new int[5, 4];
-
-
-    // Use this for initialization
+    //string[,] ranking = new string[5,4];
     void Start()
     {
-        //gm = gameManager.GetComponent<GameManager>();
-
-        //GetRanking();
-
-        //SetRanking(gm.countup);
-
-        /*for (int i = 0; i < rankingText.GetLength(0); i++)
-        {
-            rankingText[dif,i].text = rankingValue[dif,i].ToString();
-        }*/
-        //for (int i = 0; i < rknm.Length; i++)
-       // {
-       //     rknm[dif].rkText[i].text = rankingValue[dif,i].ToString();
-       // }
     }
 
-    /// <summary>
-    /// ランキング呼び出し
-    /// </summary>
     public void GetRanking()
     {
-        //gm = gameManager.GetComponent<GameManager>();
-
-        for (int i = 0; i < rknm.Length; i++)
-        {
-            rknm[dif].rkText[i].text = rankingValue[dif, i].ToString();
-        }
-
-
         //ランキング呼び出し
-        for (int i = 0; i < rknm.Length; i++)
+        for (int i = 0; i < 5; i++)
         {
-            rankingValue[dif,i] = PlayerPrefs.GetInt(ranking[dif,i]);
+            string key = "HighScore" + i.ToString() + "-" + dif.ToString();
+            rankingValue[i,dif] = PlayerPrefs.GetInt(key);
+            string rkst = rankingValue[i, dif].ToString();
+            
+            rankText[i].text = rkst;
         }
     }
-    /// <summary>
-    /// ランキング書き込み
-    /// </summary>
-    public void SetRanking(string _value)
+    public void SetRanking(int _value)
     {
         //書き込み用
         for (int i = 0; i < 5; i++)
         {
             //取得した値とRankingの値を比較して入れ替え
-            if (_value < rankingValue[i,dif])
+            if (_value < rankingValue[i,dif] || rankingValue[i,dif] == 0)
             {
                 var change = rankingValue[i,dif];
                 rankingValue[i,dif] = _value;
@@ -87,13 +51,7 @@ public class Ranking : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             string key = "HighScore" + i.ToString() + "-" + dif.ToString();
-            PlayerPrefs.SetString(key, rankingValue[i, dif]);
+            PlayerPrefs.SetInt(key, rankingValue[i, dif]);
         }
-    }
-
-    [System.Serializable]
-    public class TextArray
-    {
-        public Text[] rkText = new Text[5];
     }
 }
