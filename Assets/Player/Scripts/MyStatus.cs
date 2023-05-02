@@ -30,11 +30,6 @@ public class MyStatus : MonoBehaviour
         }
     }
 
-    bool IsDead()
-    {
-        return hp <= 0;
-    }
-
     private void Start()
     {
         ss = GameObject.Find("Shooter").GetComponent<Shooter>();

@@ -80,8 +80,13 @@ public class ZombieController : EnemyController
             yield return new WaitForSeconds(0.1f);
             if (isInvincible)
             {
-                leftHandCollider.enabled = false;
-                rightHandCollider.enabled = false;
+                {
+                    leftHandCollider.enabled = false;
+                }
+                if (rightHandCollider != null)
+                {
+                    rightHandCollider.enabled = false;
+                }
                 yield break;
             }
             GameObject p = GameObject.FindGameObjectWithTag("Player");
