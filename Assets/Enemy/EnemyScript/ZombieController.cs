@@ -123,6 +123,7 @@ public class ZombieController : EnemyController
         Hp -= damage;
         if (Hp <= 0)
         {
+            SoundManager.instance.Play("ゾンビ死亡");
             animator.SetTrigger("dead");
             animator.SetBool("isDead", true);
             isInvincible = true;
