@@ -96,6 +96,7 @@ public class ZombieController : EnemyController
                 transform.LookAt(p.transform);
             }
            
+
             float dist =
                 Vector3.Distance
                 (p.transform.position, transform.position);
