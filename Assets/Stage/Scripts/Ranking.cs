@@ -13,14 +13,19 @@ public class Ranking : MonoBehaviour
     int dif = DifficultyButton.difficulty -1;
 
     [SerializeField]
-    string[,] ranking = new string[4,5];
+    string[,] ranking = new string[5,4];
+
     //[SerializeField]
     //Text[,] rankingText = new Text[4,5];
-    [SerializeField]
-    float[,] rankingValue = new float[4,5];
 
     [SerializeField]
-    TextArray[] rknm = new TextArray[4];
+    string[,] rankingValue = new string[5, 4];
+    //float[,] rankingValue = new float[4,5];
+
+    //[SerializeField]
+    //TextArray[] rknm = new TextArray[4];
+
+    //string[,] highScores = new int[5, 4];
 
 
     // Use this for initialization
@@ -64,24 +69,25 @@ public class Ranking : MonoBehaviour
     /// <summary>
     /// ランキング書き込み
     /// </summary>
-    public void SetRanking(float _value)
+    public void SetRanking(string _value)
     {
         //書き込み用
-        for (int i = 0; i < ranking.Length; i++)
+        for (int i = 0; i < 5; i++)
         {
             //取得した値とRankingの値を比較して入れ替え
-            if (_value < rankingValue[dif,i])
+            if (_value < rankingValue[i,dif])
             {
-                var change = rankingValue[dif,i];
-                rankingValue[dif,i] = _value;
+                var change = rankingValue[i,dif];
+                rankingValue[i,dif] = _value;
                 _value = change;
             }
         }
 
         //入れ替えた値を保存
-        for (int i = 0; i < ranking.Length; i++)
+        for (int i = 0; i < 5; i++)
         {
-            PlayerPrefs.SetFloat(ranking[dif,i], rankingValue[dif,i]);
+            string key = "HighScore" + i.ToString() + "-" + dif.ToString();
+            PlayerPrefs.SetString(key, rankingValue[i, dif]);
         }
     }
 
